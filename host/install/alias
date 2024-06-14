@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#>
+
+cat <<EOF > ~/.alias
+alias pods='kubectl get pods --all-namespaces'
+EOF
+
+grep -qxF 'source ~/.alias' ~/.profile \
+ || echo 'source ~/.alias' >> ~/.profile

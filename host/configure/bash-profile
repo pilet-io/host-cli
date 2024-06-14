@@ -1,0 +1,29 @@
+#!/bin/bash
+
+cat <<EOF >> ~/.bash_profile
+source ~/.bashrc
+
+# CONFIG REPO
+export WITH_CONFIG_REPO_URL=https://repo.pilet.cloud
+export WITH_CONFIG_REPO_TOKEN=cGlsZXQ6MjdkMTZhNWJjYjRmMjdkNGJlM2E2MWI0MzM3NDc1ZjU=
+
+# ENC / DECR
+export WITH_ENC_KEY=117106a6f4e85affede8dd34c47bfb80
+
+# DNS
+export WITH_DNS_PROVIDER=cloudflare
+export WITH_DNS_USER=potapov@yahoo.com
+export WITH_DNS_PASSWORD=110b9ee1509df327bcae802444c641a90496f
+export WITH_DNS_TOKEN=Pk3-Ng9nedmbo0J7my2YlY_hgujMnf4nkW4wAmPc
+
+# VM
+export WITH_VM_PROVIDER=vm-lxd
+
+# DOCKER
+export WITH_DOCKER_SERVER=https://index.docker.io/v1/
+export WITH_DOCKER_USER=pilet
+export WITH_DOCKER_PASSWORD=dckr_pat_Amf1m2I7t7G5BRkuB6Q1Md0hCDQ
+export WITH_DOCKER_EMAIL=alex@pilet.io
+
+export PATH=~/cli:~/cli/.tools:~/cli/tools/run:\$PATH
+EOF

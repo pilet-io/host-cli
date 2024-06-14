@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#> [hostname]=?
+
+hostnamectl set-hostname $HOSTNAME
+
+apt update
+apt install -y apt-transport-https ca-certificates curl software-properties-common jq snapd
+snap install yq
+snap install kubectl --classic
+
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash

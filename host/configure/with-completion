@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#>
+
+
+cat <<EOF > /etc/bash_completion.d/with
+_with()
+{
+    local cur prev words cword curdir
+    _init_completion || return
+
+    if [ "\$cword" == "1" ]; then
+        suggest=\$(ls ~/cli)
+        COMPREPLY=( \$( compgen -W "\$suggest" -- "\$cur" ) )
+    elif [ "\$cword" == "2" ]; then
+        suggest=\$(ls ~/cli/\${words[1]})
+        COMPREPLY=( \$( compgen -W "\$suggest" -- "\$cur" ) )
+    elif [ "\$cword" == "3" ]; then
+        suggest=\$(ls ~/cli/\${words[1]}/\${words[2]})
+        COMPREPLY=( \$( compgen -W "\$suggest" -- "\$cur" ) )
+    fi
+} &&
+complete -F _with with
+EOF
