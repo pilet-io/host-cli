@@ -10,7 +10,7 @@ source ~/cli/.include/all
 WITH_SCOPE=${1}
 WITH_COMMAND="with.${1}.${2}.${3}"
 SNIP=${1}/${2}/${3}
-SNIP_FILE=~/cli/$SNIP
+SNIP_FILE=~/host-cli/$SNIP
 
 if [ ! -f "$SNIP_FILE" ]; then
   echo "Command [$1 $2 $3] not found"
