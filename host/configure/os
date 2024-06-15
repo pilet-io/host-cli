@@ -7,6 +7,7 @@
 apt update >/dev/null
 apt install -y apt-transport-https ca-certificates curl software-properties-common jq >/dev/null
 
+echo Done installing base apps
 #apt install -y snapd
 #snap install yq
 
