@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#> [hostname]=?
+
+#hostnamectl set-hostname $HOSTNAME
+
+apt update
+apt install -y apt-transport-https ca-certificates curl software-properties-common jq 
+
+#apt install -y snapd
+#snap install yq
+
+
