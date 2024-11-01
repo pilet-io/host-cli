@@ -12,8 +12,8 @@ apt install -y apt-transport-https ca-certificates curl software-properties-comm
 snap install yq
 snap install lxd
 
-apt install python3
-apt install python3-pip
+apt install -y python3
+apt install -y python3-pip
 pip install rsa
 
 output="$(zpool list)"
