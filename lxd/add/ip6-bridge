@@ -8,12 +8,9 @@ DHCP_A=${IP6/2\/64/100}
 DHCP_B=${IP6/2\/64/240}
 echo "IP=$IP6 A=$DHCP_A B=$DHCP_B"
 
-#lxc network create lxdbr0 \
-#  ipv6.address=${IP6} \
-#  ipv6.nat=false \
-#  ipv6.dhcp=true \
-#  ipv6.dhcp.stateful=false \
-#  ipv6.dhcp.range=2001:db8:1234::100,2001:db8:1234::200
-
-#lxd init --auto \
-#  --network-address=2001:db8:1234::1/64
+lxc network create lxdbr0 \
+  ipv6.address=$IP6 \
+  ipv6.nat=false \
+  ipv6.dhcp=true \
+  ipv6.dhcp.stateful=false \
+  ipv6.dhcp.range=$DHCP_A,$DHCP_B
