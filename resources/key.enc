@@ -1,40 +1,3 @@
-#!/bin/bash
-
-if [[ -z "$SYS_HOSTNAME" ]]; then
-  echo "Configure SYS_XXX variables"
-  exit 1
-fi
-
-hostnamectl set-hostname $SYS_HOSTNAME
-
-apt update
-apt install -y apt-transport-https ca-certificates curl software-properties-common jq snapd zfsutils-linux
-snap install yq
-snap install lxd
-
-output="$(zpool list)"
-
-if [[ $output != "no pools available" ]]
-then
-  echo "ZPOOL is already configured, skipping"
-else
-  echo "Configuring ZPOOL"
-  SECTOR=$(sgdisk -p /dev/nvme0n1 | grep FD00 | grep ' 3 ' | awk '{print $3}')
-  sgdisk -n 5:${SECTOR}:0 /dev/nvme0n1
-  partprobe /dev/nvme0n1
-
-  SECTOR=$(sgdisk -p /dev/nvme1n1 | grep FD00 | grep ' 3 ' | awk '{print $3}')
-  sgdisk -n 5:${SECTOR}:0 /dev/nvme1n1
-  partprobe /dev/nvme1n1
-
-  zpool create -f main /dev/nvme0n1p5 /dev/nvme1n1p5
-  zpool list
-fi
-
-sed -i 's|::2/64|::2/128|g' /etc/netplan/01-netcfg.yaml
-netplan apply
-
-cat <<EOF | openssl enc -aes-256-cbc -a -d -pbkdf2 -k $SYS_PASSCODE > /root/.ssh/id_rsa
 U2FsdGVkX1+b/QQ8shpRldy2b8WRm1LPgtiqdKWfyFgbtoDC5GDf0eJVCTw/idhY
 YXnDE85xop8PJj9woou6T14vZZVJiaYoCEWJ9u/mqQj17yJAikp3X4v3LYSTL/Pi
 XBnFedzImrNG/8C8PU+CDNmuS1wDGWkZYMvMWdC9OUDM/ejltEDKB4jtvEiwZ+Kt
@@ -71,10 +34,3 @@ FUcyfIihtfYtEQF9sqXKna+W8vNkI4wcAREXtHrEC6nPeKoW3rgjYt4NuwJhQ//i
 1zNWgOCOPGHgzLeyHby0wiyUaHYGYEumf7Hc8VkS25+DT1m2XW1wPp/Ch+dptOD1
 uwYcMxrNIec1AwPN1dJ3m9PnkA4txgnKbhoY8Iv43wfSAevnlnAcmET7cnKJsEQs
 R5l3rXtz3E2zFg4rhLBLiw==
-EOF
-
-chmod 400 /root/.ssh/id_rsa
-
-git clone git@github.com:pilet-io/host-cli.git
-#mv /root/host-cli /root/cli
-#echo "export PATH=\$PATH:/root/cli" >> /root/.profile

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+openssl enc -aes-256-cbc -a -d -pbkdf2 -k $SYS_PASSCODE
