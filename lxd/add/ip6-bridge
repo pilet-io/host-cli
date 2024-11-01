@@ -13,5 +13,4 @@ lxc network create lxdbr0 \
   ipv6.nat=false \
   ipv6.dhcp=true \
   ipv6.dhcp.stateful=false \
-  ipv6.dhcp.range=$DHCP_A,$DHCP_B \
-  --target fs1701.pilet.cloud
+  ipv6.dhcp.range=$DHCP_A,$DHCP_B
