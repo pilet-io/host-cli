@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ -z "$SYS_HOSTNAME" ]]; then
+if [ -z "$SYS_HOSTNAME" ]; then
   echo "Configure SYS_XXX variables"
   exit 1
 fi
