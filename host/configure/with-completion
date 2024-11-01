@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#>
-
 
 cat <<EOF > /etc/bash_completion.d/with
 _with()
