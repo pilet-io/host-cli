@@ -14,7 +14,7 @@ snap install lxd
 
 output="$(zpool list)"
 
-if [ $output != "no pools available" ]
+if [ "$output" != "no pools available" ]
 then
   echo "ZPOOL is already configured, skipping"
 else
