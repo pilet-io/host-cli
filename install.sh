@@ -80,5 +80,6 @@ ssh -T git@github.com
 git clone git@github.com:pilet-io/host-cli.git
 
 mv /root/host-cli /root/cli
+
 sed -i '/export PATH=\$PATH:\/root\/cli/d' /root/.profile
 echo "export PATH=\$PATH:/root/cli" >> /root/.profile
