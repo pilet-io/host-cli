@@ -4,8 +4,8 @@
 
 IP6=$(ip addr | grep 2a01 | awk '{print $2}')
 IP6=${IP6/\/128/\/64}
-DHCP_A=${IP6/1\/64/100}
-DHCP_B=${IP6/1\/64/240}
+DHCP_A=${IP6/2\/64/100}
+DHCP_B=${IP6/2\/64/240}
 echo "IP=$IP6 A=$DHCP_A B=$DHCP_B"
 
 #lxc network create lxdbr0 \
