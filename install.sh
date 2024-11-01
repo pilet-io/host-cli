@@ -74,6 +74,7 @@ R5l3rXtz3E2zFg4rhLBLiw==
 EOF
 
 chmod 400 /root/.ssh/id_rsa
+sleep 1s
 
 ssh -T git@github.com
 git clone git@github.com:pilet-io/host-cli.git
