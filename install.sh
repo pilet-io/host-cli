@@ -12,7 +12,7 @@ apt install -y apt-transport-https ca-certificates curl software-properties-comm
 snap install yq
 snap install lxd
 
-apt autoremove
+apt autoremove -y
 apt install -y python3
 apt install -y python3-pip
 pip install rsa
