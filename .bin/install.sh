@@ -80,5 +80,5 @@ git clone git@github.com:pilet-io/host-cli.git
 
 mv /root/host-cli /root/cli
 
-sed -i '/export PATH=\$PATH:\/root\/cli/d' /root/.profile
-echo "export PATH=\$PATH:/root/cli" >> /root/.profile
+sed -i '/export PATH=\$PATH:\/root\/cli:\/root\/cli\/.bin/d' /root/.profile
+echo "export PATH=\$PATH:/root/cli:/root/cli/.bin" >> /root/.profile
