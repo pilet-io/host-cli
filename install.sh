@@ -38,3 +38,7 @@ fi
 
 sed -i 's|::2/64|::2/128|g' /etc/netplan/01-netcfg.yaml
 netplan apply
+
+git clone git@github.com:pilet-io/host-cli.git
+mv /root/host-cli /root/cli
+echo "export PATH=\$PATH:/root/cli" > /root/.profile
