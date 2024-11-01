@@ -2,7 +2,8 @@
 
 #>
 
-IP6=$(ip addr | grep 2a01 | awk '{print $2}')
-IP6=${IP/\/128/\/64}
+IP6=\$(ip addr | grep 2a01 | awk '{print $2}')
+echo "IP=\$IP"
 
-echo "IP=$IP"
+IP6=\${IP/\/128/\/64}
+echo "IP=\$IP"
