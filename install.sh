@@ -77,6 +77,8 @@ chmod 400 /root/.ssh/id_rsa
 sleep 1s
 
 ssh -T git@github.com
+sleep 1s
+
 git clone git@github.com:pilet-io/host-cli.git
 
 #mv /root/host-cli /root/cli
