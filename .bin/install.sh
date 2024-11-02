@@ -82,3 +82,6 @@ mv /root/host-cli /root/cli
 
 sed -i '/export PATH=\$PATH:\/root\/cli:\/root\/cli\/.bin/d' /root/.profile
 echo "export PATH=\$PATH:/root/cli:/root/cli/.bin" >> /root/.profile
+
+source /root/.profile
+with host configure with-completion
