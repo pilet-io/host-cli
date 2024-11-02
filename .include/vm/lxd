@@ -70,7 +70,7 @@ config:
 description: ${NAME} size profile
 devices:
   enp5s0:
-    name: eth0
+    name: enp5s0
     network: lxdbr0
     type: nic
   root:
