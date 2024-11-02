@@ -63,14 +63,14 @@ function vm_save_profile() {
   echo "Saving LXC profile $NAME : $CPU $RAM $DISK"
   lxc profile create ${NAME}
 
-  cat <<EOF > lxc profile edit ${NAME}
+  cat <<EOF | lxc profile edit ${NAME}
 config:
   limits.cpu: "${CPU}"
   limits.memory: ${RAM}GB
 description: ${NAME} size profile
 devices:
   enp5s0:
-    name: enp5s0
+    name: eth0
     network: lxdbr0
     type: nic
   root:
