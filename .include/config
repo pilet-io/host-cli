@@ -1,0 +1,48 @@
+#!/bin/bash
+
+
+function config_save_yaml() {
+  ID=$1
+  cat | curl -s --request POST --url $WITH_CONFIG_REPO_URL/yaml/$ID \
+   --header "Content-Type: application/yaml" --raw \
+   --header "Authorization: Basic $WITH_CONFIG_REPO_TOKEN" -d "$(</dev/stdin)" | yq
+}
+
+function config_save_json() {
+  ID=$1
+  cat | curl -s --request POST --url $WITH_CONFIG_REPO_URL/json/$ID \
+   --header "Content-Type: application/json" --raw \
+   --header "Authorization: Basic $WITH_CONFIG_REPO_TOKEN" -d "$(</dev/stdin)" | jq
+}
+
+function config_get_json() {
+  ID=$1
+  URL=$WITH_CONFIG_REPO_URL/json/$ID
+
+  curl -s --request GET --url $URL \
+   --header "Authorization: Basic $WITH_CONFIG_REPO_TOKEN" | jq
+}
+
+function config_get_yaml() {
+  ID=$1
+  URL=$WITH_CONFIG_REPO_URL/yaml/$ID
+
+  curl -s --request GET --url $URL \
+   --header "Authorization: Basic $WITH_CONFIG_REPO_TOKEN" | yq
+}
+
+function config_get_shell() {
+  ID=$1
+  URL=$WITH_CONFIG_REPO_URL/shell/$ID
+
+  curl -s --request GET --url $URL \
+   --header "Authorization: Basic $WITH_CONFIG_REPO_TOKEN"
+}
+
+function config_delete() {
+  ID=$1
+  URL=$WITH_CONFIG_REPO_URL/json/$ID
+
+  curl -s --request DELETE --url $URL \
+   --header "Authorization: Basic $WITH_CONFIG_REPO_TOKEN" | jq
+}

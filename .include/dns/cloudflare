@@ -1,0 +1,73 @@
+#!/bin/bash
+
+function dns_list_zones() {
+  curl -s --request GET \
+    --url https://api.cloudflare.com/client/v4/zones \
+    --header 'Content-Type: application/json' \
+    --header "X-Auth-Email: ${WITH_DNS_USER}" \
+    --header "X-Auth-Key: ${WITH_DNS_PASSWORD}" \
+   | jq -r '.result[] | .id + " " + .name + " " + .status'
+}
+
+function dns_zone_id() {
+  ZONE=$1
+  ZONE_ID=$(dns_list_zones | grep $ZONE | awk '{print $1}')
+  echo "$ZONE_ID"
+}
+
+function dns_list_records() {
+  ZONE_ID=$(dns_zone_id $1)
+
+  curl -s --request GET \
+    --url https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records \
+    --header 'Content-Type: application/json' \
+    --header "X-Auth-Email: ${WITH_DNS_USER}" \
+    --header "X-Auth-Key: ${WITH_DNS_PASSWORD}" \
+   | jq -r '.result[] | .id + " " + .name + " " + .type + " " + .content'
+}
+
+function dns_create_record() {
+  #> A sample pilet.cloud 198.51.100.4
+  TYPE=$1
+  NAME=$2
+  ZONE=$3
+  CONTENT=$4
+
+  ZONE_ID=$(dns_zone_id $ZONE)
+
+  curl -s --request POST \
+    --url https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records \
+    --header 'Content-Type: application/json' \
+    --header "X-Auth-Email: ${WITH_DNS_USER}" \
+    --header "X-Auth-Key: ${WITH_DNS_PASSWORD}" \
+    --data @- <<EOF | jq -r '.result.id + " " + .result.name + " " + .result.type + " " + .result.content'
+{
+  "content": "$CONTENT",
+  "name": "$NAME.$ZONE",
+  "proxied": false,
+  "type": "$TYPE"
+}
+EOF
+}
+
+function dns_delete_record_id() {
+  RECORD_ID=$1
+  ZONE_ID=$2
+
+  curl -s --request DELETE \
+    --url https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID \
+    --header 'Content-Type: application/json' \
+    --header "X-Auth-Email: ${WITH_DNS_USER}" \
+    --header "X-Auth-Key: ${WITH_DNS_PASSWORD}" | jq -r .result.id
+}
+
+function dns_delete_record() {
+  NAME=$1
+  ZONE=$2
+  ZONE_ID=$(dns_zone_id $ZONE)
+  RECORD_IDS=$(dns_list_records $ZONE | grep $NAME | awk '{print $1}')
+
+  for RECORD_ID in ${RECORD_IDS}; do
+    dns_delete_record_id $RECORD_ID $ZONE_ID
+  done
+}

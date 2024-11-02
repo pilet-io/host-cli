@@ -1,0 +1,68 @@
+#!/bin/bash
+
+function log_info() {
+  echo "<-> $(date +%s%3N) $SPAN_ID INFO $1"
+}
+
+function log_warn() {
+  echo "<-> $(date +%s%3N) $SPAN_ID WARN $1"
+}
+
+function log_error() {
+  echo "<-> $(date +%s%3N) $SPAN_ID ERROR $1"
+}
+
+function span_start() {
+  declare -n PARAMS=$2
+  ARGS="command=$1"
+  for PARAM in "${!PARAMS[@]}"; do
+    ARGS="$ARGS $PARAM=${PARAMS[$PARAM]}"
+  done
+  echo "<-> $(date +%s%3N) $SPAN_ID SPAN_START $ARGS"
+}
+
+function span_end() {
+  echo "<-> $(date +%s%3N) $SPAN_ID SPAN_END"
+}
+
+function log_infos() {
+  IFS='
+'
+  for line in $1; do
+    log_info $line
+  done
+}
+
+function log_warn() {
+  IFS='
+'
+  for line in $1; do
+    log_warn $line
+  done
+}
+
+function log_errors() {
+  IFS='
+'
+  for line in $1; do
+    log_error $line
+  done
+}
+
+function pipe_infos() {
+  while read lines; do
+    log_infos "$lines"
+  done
+}
+
+function pipe_warns() {
+  while read lines; do
+    log_warns "$lines"
+  done
+}
+
+function pipe_error() {
+  while read lines; do
+    log_errors "$lines"
+  done
+}
