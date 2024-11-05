@@ -2,6 +2,9 @@
 
 #>
 
+apt purge kubectl kubeadm kubelet
+rm -rf /etc/kubernetes
+
 apt update && sudo apt upgrade -y
 apt install -y docker.io
 
