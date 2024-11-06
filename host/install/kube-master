@@ -63,4 +63,4 @@ echo 'export KUBECONFIG=/etc/kubernetes/admin.conf' >> ~/.profile
 source ~/.profile
 
 kubectl get nodes
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+#kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
