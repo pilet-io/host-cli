@@ -20,7 +20,8 @@ CREATE TABLE net4 (
   host TEXT REFERENCES host,
   address TEXT,
   subnet INT default 32,
-  template TEXT default 'none'
+  template TEXT default 'none',
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE net6 (
@@ -29,7 +30,8 @@ CREATE TABLE net6 (
   host TEXT REFERENCES host,
   address TEXT,
   subnet INT default 64,
-  template TEXT default 'none'
+  template TEXT default 'none',
+  PRIMARY KEY (id)
 );
 
 INSERT INTO host (host,ram,cpu,disk) VALUES
