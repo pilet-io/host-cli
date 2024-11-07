@@ -48,4 +48,10 @@ INSERT INTO net4 (type,host,address,subnet,template) VALUES
 ('vm','fs1701.pilet.cloud', '192.168.1.1', 16, '192.168.1.*'),
 ('vm','fs1702.pilet.cloud', '192.168.2.1', 16, '192.168.2.*'),
 ('vm','fs1703.pilet.cloud', '192.168.3.1', 16, '192.168.3.*');
+
+INSERT INTO net6 (host,address,template) VALUES
+('fs1701.pilet.cloud', '2a01:4f8:261:5103::2','2a01:4f8:261:5103::*'),
+('fs1702.pilet.cloud', '2a01:4f8:261:52da::2','2a01:4f8:261:52da::*'),
+('fs1703.pilet.cloud', '2a01:4f8:10b:2c49::2','2a01:4f8:10b:2c49::*');
+
 EOF
