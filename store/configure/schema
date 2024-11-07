@@ -3,5 +3,14 @@
 #>
 
 cat <<EOF | sys_store
-CREATE SCHEMA IF NOT EXISTS system;
+DROP SCHEMA IF EXISTS system;
+CREATE SCHEMA system;
+
+CREATE TABLE hosts (
+  host TEXT PRIMARY KEY,
+  ram INT,
+  cpu INT,
+  disk INT
+);
+
 EOF
