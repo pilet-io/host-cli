@@ -6,7 +6,7 @@ cat <<EOF | store_sys
 DROP SCHEMA IF EXISTS system;
 CREATE SCHEMA system;
 
-CREATE TABLE hosts (
+CREATE TABLE system.hosts (
   host TEXT PRIMARY KEY,
   ram INT,
   cpu INT,
