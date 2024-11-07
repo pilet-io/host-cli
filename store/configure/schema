@@ -2,7 +2,7 @@
 
 #>
 
-cat <<EOF | sys_store
+cat <<EOF | store_sys
 DROP SCHEMA IF EXISTS system;
 CREATE SCHEMA system;
 

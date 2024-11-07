@@ -1,5 +1,5 @@
 #!/bin/bash
 
-function sys_store() {
+function store_sys() {
   psql -U pilet -h pg.pilet.site -d system
 }
