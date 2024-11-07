@@ -1,0 +1,3 @@
+
+
+alias pg-sys='psql -U pilet -h pg.pilet.site -d system'
