@@ -3,7 +3,7 @@
 #>
 
 cat <<EOF | store_sys
-DROP SCHEMA IF EXISTS system;
+DROP SCHEMA IF EXISTS system CASCADE;
 CREATE SCHEMA system;
 
 CREATE TABLE system.host (
