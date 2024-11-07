@@ -1,6 +1,7 @@
 #!/bin/bash
 
-#> [name]=k3s-master [profile]=lg
+#> [name]=? [profile]=md
 
-lxc init ubuntu:24.04 $NAME --vm --profile $PROFILE -- profile vlan
-lxc config device set $NAME enp6so ipv4.address 10.99.10.42
+lxc init ubuntu:24.04 $NAME --vm --profile $PROFILE
+lxc start $NAME
+
