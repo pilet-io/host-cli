@@ -14,7 +14,7 @@ CREATE TABLE system.host (
 );
 
 CREATE TABLE system.net (
-  name TEXT,
+  name TEXT PRIMARY KEY,
   type TEXT,
   kind INT,
   host TEXT REFERENCES system.host,
