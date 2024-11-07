@@ -15,7 +15,7 @@ CREATE TABLE host (
 );
 
 CREATE TABLE net4 (
-  id TEXT GENERATED ALWAYS AS ( md5(concat(type,host)) ) STORED,
+  id TEXT GENERATED ALWAYS AS ( md5(type||host) ) STORED,
   type TEXT default 'public',
   host TEXT REFERENCES host,
   address TEXT,
@@ -24,7 +24,7 @@ CREATE TABLE net4 (
 );
 
 CREATE TABLE net6 (
-  id TEXT GENERATED ALWAYS AS ( md5(concat(type,host)) ) STORED,
+  id TEXT GENERATED ALWAYS AS ( md5(type||host) ) STORED,
   type TEXT default 'public',
   host TEXT REFERENCES host,
   address TEXT,
