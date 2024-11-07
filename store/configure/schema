@@ -5,21 +5,36 @@
 cat <<EOF | store_sys
 DROP SCHEMA IF EXISTS system CASCADE;
 CREATE SCHEMA system;
+SET search_path to system;
 
-CREATE TABLE system.host (
+CREATE TABLE host (
   host TEXT PRIMARY KEY,
   ram INT,
   cpu INT,
   disk INT
 );
 
-CREATE TABLE system.net (
-  name TEXT PRIMARY KEY,
-  type TEXT,
-  kind INT,
-  host TEXT REFERENCES system.host,
+CREATE TABLE net4 (
+  id TEXT GENERATED ALWAYS AS ( md5(concat(type,host)) ) STORED,
+  type TEXT default 'public',
+  host TEXT REFERENCES host,
   address TEXT,
-  subnet INT,
-  template TEXT
+  subnet INT default 32,
+  template TEXT default 'none'
 );
+
+CREATE TABLE net6 (
+  id TEXT GENERATED ALWAYS AS ( md5(concat(type,host)) ) STORED,
+  type TEXT default 'public',
+  host TEXT REFERENCES host,
+  address TEXT,
+  subnet INT default 64,
+  template TEXT default 'none'
+);
+
+INSERT INTO host (host,ram,cpu,disk) VALUES
+('fs1701.pilet.cloud', 128, 32, 6000),
+('fs1702.pilet.cloud', 128, 32, 6000),
+('fs1703.pilet.cloud', 128, 32, 6000);
+
 EOF
