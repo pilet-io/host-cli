@@ -37,4 +37,6 @@ INSERT INTO host (host,ram,cpu,disk) VALUES
 ('fs1702.pilet.cloud', 128, 32, 6000),
 ('fs1703.pilet.cloud', 128, 32, 6000);
 
+
+
 EOF
