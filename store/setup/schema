@@ -25,7 +25,7 @@ CREATE TABLE net4 (
 );
 
 CREATE TABLE net6 (
-  id TEXT GENERATED ALWAYS AS ( left(md5(type||host),4) ) STORED,
+  id TEXT GENERATED ALWAYS AS ( left(md5(type||host),3) ) STORED,
   type TEXT default 'public',
   host TEXT REFERENCES host,
   address TEXT,
