@@ -2,6 +2,6 @@
 
 #>
 
-cat <<EOF | pg_sys
+cat <<EOF | sys_store
 CREATE SCHEMA IF NOT EXISTS system;
 EOF
