@@ -3,4 +3,5 @@
 #> [name]=? [profile]=md
 
 lxc init ubuntu:24.04 $NAME --vm --profile $PROFILE
+lxc start $NAME
 
