@@ -2,7 +2,7 @@
 
 #> [type]=public [host]=? [address]=? [subnet]=64 [template]=none
 
-NAME=$(echo -n "$TYPE,$KIND,$HOST" | md5sum)
+NAME=$(echo -n "$TYPE,6,$HOST" | md5sum)
 NAME=${NAME:0:4}
 
 cat <<EOF | store_sys
