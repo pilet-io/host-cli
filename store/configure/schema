@@ -6,10 +6,20 @@ cat <<EOF | store_sys
 DROP SCHEMA IF EXISTS system;
 CREATE SCHEMA system;
 
-CREATE TABLE system.hosts (
+CREATE TABLE system.host (
   host TEXT PRIMARY KEY,
   ram INT,
   cpu INT,
   disk INT
+);
+
+CREATE TABLE system.net (
+  name TEXT,
+  type TEXT,
+  kind INT,
+  host TEXT REFERENCES system.host,
+  address TEXT,
+  subnet INT,
+  template TEXT
 );
 EOF
