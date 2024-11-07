@@ -12,5 +12,4 @@ CREATE TABLE hosts (
   cpu INT,
   disk INT
 );
-
 EOF
