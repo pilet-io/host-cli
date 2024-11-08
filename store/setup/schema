@@ -51,9 +51,7 @@ CREATE TABLE address (
   PRIMARY KEY (seq, host)
 )
 
-CREATE FUNCTION populate_address(p_host TEXT)
-RETURNS INT
-LANGUAGE plpgsql
+CREATE FUNCTION populate_address(p_host TEXT) RETURNS INT
 AS $$
 DECLARE
    v_template4 TEXT;
@@ -76,7 +74,7 @@ BEGIN
 
   return 0;
 end;
-$$
+LANGUAGE PLPGSQL $$
 
 INSERT INTO host (host,ram,cpu,disk) VALUES
 ('fs1701.pilet.cloud', 128, 32, 6000),
