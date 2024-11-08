@@ -45,7 +45,7 @@ CREATE TABLE vm (
 CREATE TABLE address (
   seq INT,
   host TEXT REFERENCES host,
-  vm TEXT REFERENCES vm,
+  vm_name TEXT,
   ip4 TEXT,
   ip6 TEXT,
   PRIMARY KEY (seq, host)
@@ -77,6 +77,30 @@ BEGIN
   return 0;
 end;
 \$\$ LANGUAGE PLPGSQL;
+
+CREATE FUNCTION register_vm(p_host TEXT, p_vm_name TEXT, p_profiles TEXT) RETURNS TEXT
+AS \$\$
+DECLARE
+  v_seq INT;
+  v_ip4 TEXT;
+  v_ip6 TEXT;
+BEGIN
+  INSERT INTO vm (name, host, profile)
+  VALUES (p_vm_name, p_host, p_profiles);
+
+  SELECT seq INTO v_seq FROM address a JOIN generate_series(10,100) as sq ON sq = a.seq
+  WHERE host = p_host and vm is null LIMIT 1;
+
+  UPDATE address SET vm_name = p_vm_name
+  WHERE host = p_host AND seq = v_seq
+
+  SELECT ip4, ip6 INTO v_ip4, v_ip6
+  FROM address WHERE seq = v_seq AND host = p_host;
+
+  return v_ip4 || ',' || v_ip6;
+end;
+\$\$ LANGUAGE PLPGSQL;
+
 
 INSERT INTO host (host,ram,cpu,disk) VALUES
 ('fs1701.pilet.cloud', 128, 32, 6000),
