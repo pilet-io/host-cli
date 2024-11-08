@@ -92,7 +92,7 @@ BEGIN
   WHERE host = p_host and vm is null LIMIT 1;
 
   UPDATE address SET vm_name = p_vm_name
-  WHERE host = p_host AND seq = v_seq
+  WHERE host = p_host AND seq = v_seq;
 
   SELECT ip4, ip6 INTO v_ip4, v_ip6
   FROM address WHERE seq = v_seq AND host = p_host;
