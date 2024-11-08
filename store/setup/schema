@@ -34,6 +34,50 @@ CREATE TABLE net6 (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE vm (
+  id TEXT GENERATED ALWAYS AS ( left(md5(name||host),6) ) STORED,
+  name TEXT,
+  host TEXT REFERENCES host,
+  profile TEXT,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE address (
+  seq INT,
+  host TEXT REFERENCES host,
+  vm TEXT REFERENCES vm,
+  ip4 TEXT,
+  ip6 TEXT,
+  PRIMARY KEY (seq, host)
+)
+
+CREATE FUNCTION populate_address(p_host TEXT)
+RETURNS INT
+LANGUAGE plpgsql
+AS $$
+DECLARE
+   v_template4 TEXT;
+   v_template6 TEXT;
+BEGIN
+  SELECT template INTO v_template4 FROM net4 WHERE host = p_host;
+  IF NOT FOUND THEN
+    RAISE 'NET4 not found for host', p_host;
+  END IF;
+
+  SELECT template INTO v_template6 FROM net4 WHERE host = p_host;
+  IF NOT FOUND THEN
+    RAISE 'NET6 not found for host', p_host;
+  END IF;
+
+  FOR index IN 10..100 LOOP
+    INSERT INTO address (seq,host,ip4,ip6)
+    VALUES (index, p_host, replace(v_template4,'*',index), replace(v_template6,'*',index));
+  END LOOP;
+
+  return 0;
+end;
+$$
+
 INSERT INTO host (host,ram,cpu,disk) VALUES
 ('fs1701.pilet.cloud', 128, 32, 6000),
 ('fs1702.pilet.cloud', 128, 32, 6000),
@@ -53,5 +97,9 @@ INSERT INTO net6 (host,address,template) VALUES
 ('fs1701.pilet.cloud', '2a01:4f8:261:5103::2','2a01:4f8:261:5103::*'),
 ('fs1702.pilet.cloud', '2a01:4f8:261:52da::2','2a01:4f8:261:52da::*'),
 ('fs1703.pilet.cloud', '2a01:4f8:10b:2c49::2','2a01:4f8:10b:2c49::*');
+
+SELECT populate_address('fs1701.pilet.cloud');
+SELECT populate_address('fs1702.pilet.cloud');
+SELECT populate_address('fs1703.pilet.cloud');
 
 EOF
