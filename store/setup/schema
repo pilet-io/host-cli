@@ -57,12 +57,12 @@ DECLARE
    v_template4 TEXT;
    v_template6 TEXT;
 BEGIN
-  SELECT template INTO v_template4 FROM net4 WHERE host = p_host;
+  SELECT template INTO v_template4 FROM net4 WHERE host = p_host and type = 'vm';
   IF NOT FOUND THEN
     RAISE 'NET4 not found for host %', p_host;
   END IF;
 
-  SELECT template INTO v_template6 FROM net4 WHERE host = p_host;
+  SELECT template INTO v_template6 FROM net6 WHERE host = p_host;
   IF NOT FOUND THEN
     RAISE 'NET6 not found for host %', p_host;
   END IF;
