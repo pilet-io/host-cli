@@ -85,17 +85,17 @@ DECLARE
   v_ip4 TEXT;
   v_ip6 TEXT;
 BEGIN
-  INSERT INTO vm (name, host, profile)
+  INSERT INTO system.vm (name, host, profile)
   VALUES (p_vm_name, p_host, p_profiles);
 
-  SELECT seq INTO v_seq FROM address a JOIN generate_series(10,100) as sq ON sq = a.seq
+  SELECT seq INTO v_seq FROM system.address a JOIN generate_series(10,100) as sq ON sq = a.seq
   WHERE host = p_host and vm is null LIMIT 1;
 
-  UPDATE address SET vm_name = p_vm_name
+  UPDATE system.address SET vm_name = p_vm_name
   WHERE host = p_host AND seq = v_seq;
 
   SELECT ip4, ip6 INTO v_ip4, v_ip6
-  FROM address WHERE seq = v_seq AND host = p_host;
+  FROM system.address WHERE seq = v_seq AND host = p_host;
 
   return v_ip4 || ',' || v_ip6;
 end;
