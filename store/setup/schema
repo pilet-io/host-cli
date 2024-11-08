@@ -89,7 +89,7 @@ BEGIN
   VALUES (p_vm_name, p_host, p_profiles);
 
   SELECT seq INTO v_seq FROM system.address a JOIN generate_series(10,100) as sq ON sq = a.seq
-  WHERE host = p_host and vm is null LIMIT 1;
+  WHERE host = p_host and vm_name is null LIMIT 1;
 
   UPDATE system.address SET vm_name = p_vm_name
   WHERE host = p_host AND seq = v_seq;
