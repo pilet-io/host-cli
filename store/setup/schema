@@ -52,7 +52,7 @@ CREATE TABLE address (
 );
 
 CREATE FUNCTION populate_address(p_host TEXT) RETURNS INT
-AS $$
+AS \$\$
 DECLARE
    v_template4 TEXT;
    v_template6 TEXT;
@@ -74,7 +74,7 @@ BEGIN
 
   return 0;
 end;
-LANGUAGE PLPGSQL $$;
+\$\$ LANGUAGE PLPGSQL;
 
 INSERT INTO host (host,ram,cpu,disk) VALUES
 ('fs1701.pilet.cloud', 128, 32, 6000),
