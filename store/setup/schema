@@ -78,7 +78,7 @@ BEGIN
 end;
 \$\$ LANGUAGE PLPGSQL;
 
-CREATE FUNCTION register_vm(p_host TEXT, p_vm_name TEXT, p_profiles TEXT) RETURNS TEXT
+CREATE FUNCTION add_vm(p_host TEXT, p_vm_name TEXT, p_profiles TEXT) RETURNS TEXT
 AS \$\$
 DECLARE
   v_seq INT;
@@ -98,6 +98,15 @@ BEGIN
   FROM system.address WHERE seq = v_seq AND host = p_host;
 
   return v_ip4 || ',' || v_ip6;
+end;
+\$\$ LANGUAGE PLPGSQL;
+
+CREATE FUNCTION remove_vm(p_host TEXT, p_vm_name TEXT) RETURNS INT
+AS \$\$
+BEGIN
+  DELETE FROM system.vm WHERE host = p_host AND name = p_vm_name;
+  DELETE FROM system.address WHERE host = p_host AND vm_name = p_vm_name;
+  return 0;
 end;
 \$\$ LANGUAGE PLPGSQL;
 
