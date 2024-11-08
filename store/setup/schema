@@ -64,7 +64,7 @@ BEGIN
 
   SELECT template INTO v_template6 FROM net4 WHERE host = p_host;
   IF NOT FOUND THEN
-    RAISE 'NET6 not found for host', p_host;
+    RAISE 'NET6 not found for host %', p_host;
   END IF;
 
   FOR index IN 10..100 LOOP
