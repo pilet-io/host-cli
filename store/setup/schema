@@ -38,7 +38,7 @@ CREATE TABLE addr (
   net_id TEXT REFERENCES net,
   vm_id TEXT REFERENCES vm,
   address TEXT,
-  PRIMARY KEY (seq, net4_id)
+  PRIMARY KEY (seq, net_id)
 );
 
 
