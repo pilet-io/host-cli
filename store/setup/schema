@@ -69,7 +69,9 @@ BEGIN
 
   FOR index IN 10..100 LOOP
     INSERT INTO address (seq,host,ip4,ip6)
-    VALUES (index, p_host, replace(v_template4,'*',index), replace(v_template6,'*',index));
+    VALUES (index, p_host,
+      replace(v_template4,'*',index::text),
+      replace(v_template6,'*',index::text));
   END LOOP;
 
   return 0;
