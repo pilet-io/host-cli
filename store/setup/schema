@@ -59,7 +59,7 @@ DECLARE
 BEGIN
   SELECT template INTO v_template4 FROM net4 WHERE host = p_host;
   IF NOT FOUND THEN
-    RAISE 'NET4 not found for host', p_host;
+    RAISE 'NET4 not found for host %', p_host;
   END IF;
 
   SELECT template INTO v_template6 FROM net4 WHERE host = p_host;

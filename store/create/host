@@ -1,7 +1,0 @@
-#!/bin/bash
-
-#> [host]=? [ram]=128 [cpu]=32 [disk]=6000
-
-cat <<EOF | store_sys
-INSERT INTO system.host(host,ram,cpu,disk) VALUES ('$HOST',$RAM,$CPU,$DISK);
-EOF
