@@ -101,7 +101,7 @@ CREATE FUNCTION add_vm(p_host TEXT, p_vm_name TEXT, p_profiles TEXT) RETURNS INT
 AS \$\$
 DECLARE
   v_vm_id TEXT;
-  v_net_id TEXT
+  v_net_id TEXT;
 BEGIN
   INSERT INTO system.vm (name, host, profile)
   VALUES (p_vm_name, p_host, p_profiles) RETURNING id INTO v_vm_id;
