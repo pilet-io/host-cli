@@ -146,10 +146,10 @@ INSERT INTO net (type,host,address,subnet,template,len) VALUES
 ('dhcp','fs1702.pilet.cloud', '2a01:4f8:261:52da::2', 64, '2a01:4f8:261:52da::*', 6),
 ('dhcp','fs1703.pilet.cloud', '2a01:4f8:10b:2c49::2', 64, '2a01:4f8:10b:2c49::*', 6);
 
-PERFORM populate_address('fs1701.pilet.cloud');
-PERFORM populate_address('fs1702.pilet.cloud');
-PERFORM populate_address('fs1703.pilet.cloud');
+SELECT populate_address('fs1701.pilet.cloud');
+SELECT populate_address('fs1702.pilet.cloud');
+SELECT populate_address('fs1703.pilet.cloud');
 
-PERFORM add_vm('fs1701.pilet.cloud','uno','lg');
+SELECT add_vm('fs1701.pilet.cloud','uno','lg');
 
 EOF
