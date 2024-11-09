@@ -150,6 +150,6 @@ PERFORM populate_address('fs1701.pilet.cloud');
 PERFORM populate_address('fs1702.pilet.cloud');
 PERFORM populate_address('fs1703.pilet.cloud');
 
-PERFORM add_vm('fs1701.pilet.cloud');
+PERFORM add_vm('fs1701.pilet.cloud','uno','lg');
 
 EOF
