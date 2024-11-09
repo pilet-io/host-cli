@@ -82,7 +82,7 @@ DECLARE
 BEGIN
   SELECT seq, address INTO v_seq, v_address
   FROM system.addr a JOIN generate_series(10,100) as sq ON sq = a.seq
-  WHERE net_id = p_net_id and vm_name is null LIMIT 1;
+  WHERE net_id = p_net_id and vm_id is null LIMIT 1;
 
   UPDATE system.addr SET vm_id = p_vm_id
   WHERE net_id = p_net_id AND seq = v_seq;
