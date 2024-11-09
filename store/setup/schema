@@ -127,7 +127,7 @@ CREATE VIEW vm_addr_view AS
   FROM addr
   LEFT JOIN net ON net.id = addr.net_id
   LEFT JOIN vm ON vm.id = addr.vm_id
-  WHERE addr.vm IS NOT NULL;
+  WHERE addr.vm_id IS NOT NULL;
 
 
 INSERT INTO host (host,ram,cpu,disk) VALUES
