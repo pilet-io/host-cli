@@ -122,6 +122,12 @@ end;
 \$\$ LANGUAGE PLPGSQL;
 
 
+CREATE VIEW vm_addr_view AS
+SELECT vm.id, vm.name, vm.host, net.len, addr.address
+FROM addr
+LEFT JOIN net ON net.id = addr.net_id
+LEFT JOIN vm ON vm.id = addr.vm_id
+
 INSERT INTO host (host,ram,cpu,disk) VALUES
 ('fs1701.pilet.cloud', 128, 32, 6000),
 ('fs1702.pilet.cloud', 128, 32, 6000),
