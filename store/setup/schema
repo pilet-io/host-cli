@@ -15,7 +15,7 @@ CREATE TABLE host (
 );
 
 CREATE TABLE net (
-  id TEXT GENERATED ALWAYS AS ( left(md5(type||len::text||host),4) ) STORED,
+  id TEXT GENERATED ALWAYS AS ( left(md5(type||len::text||host),6) ) STORED,
   type TEXT default 'pub',
   len INT default 4,
   host TEXT REFERENCES host,
@@ -26,7 +26,7 @@ CREATE TABLE net (
 );
 
 CREATE TABLE vm (
-  id TEXT GENERATED ALWAYS AS ( left(md5(name||host),6) ) STORED,
+  id TEXT GENERATED ALWAYS AS ( left(md5(name||host),8) ) STORED,
   name TEXT,
   host TEXT REFERENCES host,
   profile TEXT,
