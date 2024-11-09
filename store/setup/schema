@@ -103,7 +103,7 @@ BEGIN
   INSERT INTO system.vm (name, host, profile)
   VALUES (p_vm_name, p_host, p_profiles) RETURNING id INTO v_vm_id;
 
-  FOR v_net_id IN SELECT id FROM system.net WHERE type = 'pub'
+  FOR v_net_id IN SELECT id FROM system.net WHERE type = 'dhcp'
   LOOP
     PERFORM add_vm_addr(v_vm_id, v_net_id);
   END LOOP;
