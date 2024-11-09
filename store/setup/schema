@@ -66,7 +66,7 @@ DECLARE
   v_net_id TEXT;
 BEGIN
   FOR v_net_id in SELECT id FROM net WHERE host = p_host AND type = 'dhcp' LOOP
-    SELECT populate_net(v_net_id);
+    PERFORM populate_net(v_net_id);
   END LOOP;
 
   RETURN 0;
@@ -108,7 +108,7 @@ BEGIN
 
   FOR v_net_id IN SELECT id FROM system.net WHERE type = 'pub'
   LOOP
-    SELECT add_vm_addr(v_vm_id, v_net_id);
+    PERFORM add_vm_addr(v_vm_id, v_net_id);
   END LOOP;
 
   RETURN 0;
