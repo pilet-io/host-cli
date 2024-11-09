@@ -80,9 +80,6 @@ DECLARE
   v_seq INT;
   v_address TEXT;
 BEGIN
-  INSERT INTO system.vm (name, host, profile)
-  VALUES (p_vm_name, p_host, p_profiles);
-
   SELECT seq, address INTO v_seq, v_address
   FROM system.addr a JOIN generate_series(10,100) as sq ON sq = a.seq
   WHERE net_id = p_net_id and vm_name is null LIMIT 1;
