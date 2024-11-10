@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#> [subnet]=?
+#> [subnet]=2
 
-#lxc network create br1 --type bridge
-cat <<EOF #| lxc network edit br1
+lxc network create br1 --type bridge
+cat <<EOF | lxc network edit br1
 name: br1
 description: "Vlan based"
 config:
@@ -11,7 +11,6 @@ config:
   ipv4.address: 192.168.$SUBNET.1/16
   ipv4.dhcp: "true"
   ipv4.dhcp.ranges: 192.168.$SUBNET.10-192.168.$SUBNET.100
-  ipv4.nat: "true"
 EOF
 
 lxc profile create vlan
@@ -33,8 +32,7 @@ devices:
     type: nic
   enp6s0:
     name: enp6s0
-    nictype: bridged
-    parent: br1
+    network: br1
     type: nic
   root:
     path: /
