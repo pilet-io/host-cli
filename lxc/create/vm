@@ -2,7 +2,7 @@
 
 #> [name]=? [profiles]=md
 
-for profile in ${profiles/,/ }; do
+for profile in ${PROFILES/,/ }; do
   echo "profile: $profile"
 done
 
