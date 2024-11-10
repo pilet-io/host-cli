@@ -2,8 +2,8 @@
 
 #> [subnet]=?
 
-lxc network create br1 --type bridge
-cat <<EOF | lxc network edit br1
+#lxc network create br1 --type bridge
+cat <<EOF #| lxc network edit br1
 name: br1
 description: "Vlan based"
 config:
