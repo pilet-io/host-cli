@@ -15,7 +15,7 @@ if [[ $PROFILES =~ vlan ]]; then
   echo "Creating VLAN Ubuntu VM [$NAME] with profiles [$PROFILES]"
   IP4=$(store_get_vm_addr4 $NAME)
   echo "Using $IP4"
-  lxc config device set $NAME enp6so ipv4.address $IP4
+  lxc config device set $NAME enp6s0 ipv4.address $IP4
 else
   echo echo "Creating Ubuntu VM [$NAME] with profiles [$PROFILES]"
 fi
