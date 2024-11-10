@@ -1,0 +1,105 @@
+#!/bin/bash
+
+function vm_exec() {
+  NAME=$1
+  COMMAND=$2
+  lxc exec $NAME -- bash -c "$COMMAND"
+}
+
+function vm_shell() {
+  cat | lxc shell $1
+}
+
+function vm_create() {
+  # admin pilet.cloud medium
+  NAME=$1
+  ZONE=$2
+  PROFILE=$3
+
+  lxc launch ubuntu:22.04 --vm --profile ${PROFILE} ${NAME}
+  sleep 1s
+
+  while ! lxc exec ${NAME} -- ip addr &> /dev/null
+  do
+    echo -n "."
+    sleep 2s
+  done
+  echo ""
+
+  lxc exec ${NAME} -- systemctl is-system-running --wait
+  echo "VM ${NAME} started"
+
+  IP6=$(lxc exec ${NAME} -- bash -c "ip -6 addr | grep 2a01 | awk '{print \$2}' | sed 's|/64||g'")
+  dns_create_record AAAA $NAME $ZONE $IP6
+
+  cat<<EOF | config_save_yaml infra/vm/${NAME}.${ZONE}
+name: "$NAME"
+zone: "$ZONE"
+hostname: "$NAME.$ZONE"
+profile: "$PROFILE"
+address: "$IP6"
+host: "$(hostname)"
+EOF
+}
+
+function vm_delete() {
+  # admin pilet.cloud medium
+  NAME=$1
+  ZONE=$2
+
+  lxc stop $NAME
+  lxc delete $NAME
+  dns_delete_record $NAME $ZONE
+  config_delete infra/vm/${NAME}.${ZONE}
+}
+
+
+function vm_save_profile() {
+  # 1 4 100 small
+  CPU=$1
+  RAM=$2
+  DISK=$3
+  NAME=$4
+  echo "Saving LXC profile $NAME : $CPU $RAM $DISK"
+  lxc profile create ${NAME}
+
+  cat <<EOF | lxc profile edit ${NAME}
+config:
+  limits.cpu: "${CPU}"
+  limits.memory: ${RAM}GB
+description: ${NAME} size profile
+devices:
+  enp5s0:
+    name: enp5s0
+    network: lxdbr0
+    type: nic
+  root:
+    path: /
+    pool: default
+    size: ${DISK}GB
+    type: disk
+EOF
+}
+
+function vm_save_profiles() {
+  vm_save_profile 1 4 120 sm
+  vm_save_profile 2 8 240 md
+  vm_save_profile 4 16 480 lg
+  vm_save_profile 8 32 960 xl
+  vm_save_profile 16 64 1920 xxl
+
+  lxc profile create vlan
+
+  cat <<EOF | lxc profile edit vlan
+name: vlan
+description: vlan bound
+config: {}
+devices:
+  enp6s0:
+    name: enp6s0
+    nictype: bridged
+    parent: vlan0
+    type: nic
+used_by: []
+EOF
+}

@@ -3,5 +3,5 @@
 source ~/cli/.include/log
 source ~/cli/.include/config
 source ~/cli/.include/dns/cloudflare
-source ~/cli/.include/vm/lxd
+source ~/cli/.include/vm/lxc
 source ~/cli/.include/store
