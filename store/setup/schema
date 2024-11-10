@@ -156,6 +156,6 @@ SELECT populate_address('fs1701.pilet.cloud');
 SELECT populate_address('fs1702.pilet.cloud');
 SELECT populate_address('fs1703.pilet.cloud');
 
-SELECT add_vm('fs1701.pilet.cloud','uno','lg');
+SELECT add_vm('fs1701.pilet.cloud','uno-testing','lg');
 
 EOF
