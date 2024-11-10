@@ -18,8 +18,6 @@ function store_vm_remove() {
   echo "SELECT system.remove_vm('$SYS_HOSTNAME','$1')" | store_sys
 }
 
-
-
 # store_get_vm_addr4 NAME
 function store_get_vm_addr4() {
   echo "SELECT address FROM system.vm_addr_view WHERE \
