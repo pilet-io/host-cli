@@ -105,7 +105,7 @@ BEGIN
 
   FOR v_net_id IN SELECT id FROM system.net WHERE type = 'dhcp' AND host = p_host
   LOOP
-    PERFORM add_vm_addr(v_vm_id, v_net_id);
+    PERFORM system.add_vm_addr(v_vm_id, v_net_id);
     RAISE NOTICE 'add_vm_addr % %', v_vm_id, v_net_id;
   END LOOP;
 
