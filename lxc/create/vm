@@ -4,11 +4,10 @@
 
 OPTIONS=""
 for profile in ${PROFILES/,/ }; do
-  echo "profile: $profile"
   OPTIONS="$OPTIONS --profile $profile"
 done
-
-lxc create ubuntu:24.04 $NAME $OPTIONS
+echo "Initializing $NAME with $OPTIONS"
+lxc init ubuntu:24.04 $NAME $OPTIONS
 store_vm_add $NAME $PROFILES
 
 if [[ $PROFILES =~ vlan ]]; then
