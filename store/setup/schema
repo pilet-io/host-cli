@@ -115,8 +115,11 @@ end;
 
 CREATE FUNCTION remove_vm(p_host TEXT, p_vm_name TEXT) RETURNS INT
 AS \$\$
+DECLARE
+  v_vm_id TEXT;
 BEGIN
-  DELETE FROM system.address WHERE host = p_host AND vm_name = p_vm_name;
+  SELECT id INTO v_vm_id FROM system.vm WHERE host = p_host AND name = p_vm_name;
+  DELETE FROM system.addr WHERE host = p_host AND vm_id = v_vm_id;
   DELETE FROM system.vm WHERE host = p_host AND name = p_vm_name;
   return 0;
 end;
