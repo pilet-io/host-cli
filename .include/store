@@ -8,7 +8,14 @@ function store_sys_csv() {
   psql -U pilet -h pg.pilet.site -d system --csv -t
 }
 
+# store_vm_add NAME PROFILE
 function store_vm_add() {
   # store_vm_add name profiles
   echo "SELECT system.add_vm('$SYS_HOSTNAME','$1','$2')" | store_sys_csv
+}
+
+# store_get_vm_addr4 NAME
+function store_get_vm_addr4() {
+  echo "SELECT address FROM vm_addr_view WHERE \
+  host = '$SYS_HOSTNAME' AND len = 4 AND name = '$1'  " | store_sys
 }
