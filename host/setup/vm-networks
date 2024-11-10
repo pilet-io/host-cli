@@ -33,7 +33,8 @@ devices:
     type: nic
   enp6s0:
     name: enp6s0
-    network: br1
+    nictype: bridged
+    parent: br1
     type: nic
   root:
     path: /
