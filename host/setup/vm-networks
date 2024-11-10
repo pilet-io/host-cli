@@ -1,0 +1,42 @@
+#!/bin/bash
+
+#> [subnet]=?
+
+cat <<EOF | lxc network create br1
+name: br1
+description: "Vlan based"
+type: bridge
+managed: true
+config:
+  bridge.external_interfaces: vlan4004
+  ipv4.address: 192.168.$SUBNET.1/16
+  ipv4.dhcp: "true"
+  ipv4.dhcp.ranges: 192.168.$SUBNET.10-192.168.$SUBNET.100
+  ipv4.nat: "true"
+EOF
+
+cat <<EOF | lxc profile create vlan
+name: vlan
+description: Vlan profile
+config:
+  cloud-init.network-config: |
+    version: 2
+    ethernets:
+      enp5s0:
+        dhcp4: true
+      enp6s0:
+        dhcp4: true
+devices:
+  enp5s0:
+    name: enp5s0
+    network: br0
+    type: nic
+  enp6s0:
+    name: enp6s0
+    network: br1
+    type: nic
+  root:
+    path: /
+    pool: default
+    type: disk
+EOF
