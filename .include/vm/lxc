@@ -71,7 +71,7 @@ description: ${NAME} size profile
 devices:
   enp5s0:
     name: enp5s0
-    network: lxdbr0
+    network: br0
     type: nic
   root:
     path: /
@@ -87,19 +87,4 @@ function vm_save_profiles() {
   vm_save_profile 4 16 480 lg
   vm_save_profile 8 32 960 xl
   vm_save_profile 16 64 1920 xxl
-
-  lxc profile create vlan
-
-  cat <<EOF | lxc profile edit vlan
-name: vlan
-description: vlan bound
-config: {}
-devices:
-  enp6s0:
-    name: enp6s0
-    nictype: bridged
-    parent: vlan0
-    type: nic
-used_by: []
-EOF
 }
