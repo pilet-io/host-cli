@@ -2,11 +2,10 @@
 
 #> [subnet]=?
 
-cat <<EOF | lxc network create br1
+lxc network create br1 --type bridge
+cat <<EOF | lxc network edit br1
 name: br1
 description: "Vlan based"
-type: bridge
-managed: true
 config:
   bridge.external_interfaces: vlan4004
   ipv4.address: 192.168.$SUBNET.1/16
@@ -15,7 +14,8 @@ config:
   ipv4.nat: "true"
 EOF
 
-cat <<EOF | lxc profile create vlan
+lxc profile create vlan
+cat <<EOF | lxc profile edit vlan
 name: vlan
 description: Vlan profile
 config:
