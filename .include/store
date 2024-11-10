@@ -10,9 +10,15 @@ function store_sys_csv() {
 
 # store_vm_add NAME PROFILE
 function store_vm_add() {
-  # store_vm_add name profiles
   echo "SELECT system.add_vm('$SYS_HOSTNAME','$1','$2')" | store_sys_csv
 }
+
+# store_vm_remove NAME
+function store_vm_remove() {
+  echo "SELECT system.remove_vm('$SYS_HOSTNAME','$1')" | store_sys
+}
+
+
 
 # store_get_vm_addr4 NAME
 function store_get_vm_addr4() {

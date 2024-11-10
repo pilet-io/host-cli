@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#> [name]=?
+
+lxc stop $NAME
+lxc delete $NAME
+store_vm_remove $NAME

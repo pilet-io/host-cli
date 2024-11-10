@@ -8,19 +8,18 @@ for profile in ${PROFILES/,/ }; do
   OPTIONS="$OPTIONS --profile $profile"
 done
 
-#lxc create ubuntu:24.04 $NAME $OPTIONS
+lxc create ubuntu:24.04 $NAME $OPTIONS
+store_vm_add $NAME $PROFILES
 
 if [[ $PROFILES =~ vlan ]]; then
   echo "Creating VLAN Ubuntu VM [$NAME] with profiles [$PROFILES]"
-  store_vm_add $NAME $PROFILES
   IP4=$(store_get_vm_addr4 $NAME)
-  echo "IP4: $IP4"
-
-  #lxc config device set $NAME enp6so ipv4.address 10.99.10.42
-
+  echo "Using $IP4"
+  lxc config device set $NAME enp6so ipv4.address $IP4
 else
   echo echo "Creating Ubuntu VM [$NAME] with profiles [$PROFILES]"
-
 fi
+
+lxc start $NAME
 
 
