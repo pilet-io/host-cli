@@ -1,15 +1,4 @@
 #!/bin/bash
 
-#> [name]=? [profile]=md [vlan]=false
-
-store_vm_add $NAME $PROFILE
-#if [[ $VLAN ~= "true" ]]; then
-#  lxc init ubuntu:24.04 $NAME --vm --profile $PROFILE --vlan
-
-#  lxc start $NAME
-#else
-  lxc init ubuntu:24.04 $NAME --vm --profile $PROFILE
-  lxc start $NAME
-#fi
-
+#>
 
