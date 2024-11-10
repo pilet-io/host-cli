@@ -17,5 +17,5 @@ function store_vm_add() {
 # store_get_vm_addr4 NAME
 function store_get_vm_addr4() {
   echo "SELECT address FROM system.vm_addr_view WHERE \
-  host = '$SYS_HOSTNAME' AND len = 4 AND name = '$1'  " | store_sys
+  host = '$SYS_HOSTNAME' AND len = 4 AND name = '$1'  " | store_sys_csv
 }
