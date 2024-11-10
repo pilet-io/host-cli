@@ -1,4 +1,18 @@
 #!/bin/bash
 
-#>
+#> [name]=? [profiles]=md
+
+for profile in ${profiles/,/ }; do
+  echo "profile: $profile"
+done
+
+
+if [[ $PROFILES =~ vlan ]]; then
+  echo "Creating VLAN Ubuntu VM [$NAME] with profiles [$PROFILES]"
+
+else
+  echo echo "Creating Ubuntu VM [$NAME] with profiles [$PROFILES]"
+
+fi
+
 
