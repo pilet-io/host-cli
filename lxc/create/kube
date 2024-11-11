@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#> [name]=some
+
+with lxc create vm --name $NAME --profie md
+if [ $? -ne 0 ]; then
+  echo "Failed creating container $NAME"
+  exit 1
+fi
+
+lxc exec $NAME -- apt update
+lxc exec $NAME -- curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--cluster-cidr=10.42.0.0/16,2001:cafe:42::/56 --service-cidr=10.43.0.0/16,2001:cafe:43::/112" sh -s -
+
+echo "Kubernetes master $NAME is created"
+
+
