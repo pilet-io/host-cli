@@ -45,10 +45,8 @@ AS \$\$
 DECLARE
   v_vm_id TEXT;
 BEGIN
-  SELECT id INTO v_vm_id FROM system.vm WHERE host = p_host AND name = p_vm_name;
-  UPDATE system.addr SET vm_id = null WHERE vm_id = v_vm_id;
   DELETE FROM system.vm WHERE host = p_host AND name = p_vm_name;
-  return 0;
+  RETURN 0;
 end;
 \$\$ LANGUAGE PLPGSQL;
 
