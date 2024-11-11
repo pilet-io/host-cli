@@ -1,6 +1,12 @@
 #!/bin/bash
 
-#> [name]=? [profiles]=md
+#> [name]=some [profiles]=md
+
+lxc config show $NAME
+if [ $? -ne 0 ]; then
+  echo "Container $NAME already exists"
+  exit 1
+fi
 
 OPTIONS=""
 for profile in ${PROFILES/,/ }; do
