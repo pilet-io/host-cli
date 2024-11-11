@@ -67,11 +67,22 @@ function vm_save_profile() {
 config:
   limits.cpu: "${CPU}"
   limits.memory: ${RAM}GB
+  cloud-init.network-config: |
+    version: 2
+    ethernets:
+      enp5s0:
+        dhcp4: true
+      enp6s0:
+        dhcp4: true
 description: ${NAME} size profile
 devices:
   enp5s0:
     name: enp5s0
     network: br0
+    type: nic
+  enp6s0:
+    name: enp6s0
+    network: br1
     type: nic
   root:
     path: /
