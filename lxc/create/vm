@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#> [name]=some [profiles]=md
+#> [name]=some [profile]=md
 
 lxc config show $NAME > /dev/null 2>&1
 if [ $? -eq 0 ]; then
@@ -9,7 +9,7 @@ if [ $? -eq 0 ]; then
 fi
 
 OPTIONS=""
-for profile in ${PROFILES/,/ }; do
+for profile in ${PROFILE/,/ }; do
   OPTIONS="$OPTIONS --profile $profile"
 done
 
@@ -17,7 +17,7 @@ store_vm_remove $NAME > /dev/null
 
 echo "Initializing $NAME with $OPTIONS"
 lxc init ubuntu:24.04 $NAME $OPTIONS
-store_vm_add $NAME $PROFILES
+store_vm_add $NAME $PROFILE
 lxc start $NAME
 
 while true; do

@@ -2,7 +2,7 @@
 
 #> [name]=some
 
-with lxc create vm --name $NAME --profiles md
+with lxc create vm --name $NAME --profile md
 if [ $? -ne 0 ]; then
   echo "Failed creating container $NAME"
   exit 1
