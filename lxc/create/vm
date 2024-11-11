@@ -2,8 +2,8 @@
 
 #> [name]=some [profiles]=md
 
-lxc config show $NAME
-if [ $? -ne 0 ]; then
+lxc config show $NAME > /dev/null 2>&1
+if [ $? -eq 0 ]; then
   echo "Container $NAME already exists"
   exit 1
 fi
