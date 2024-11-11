@@ -14,84 +14,16 @@ CREATE TABLE host (
   disk INT
 );
 
-CREATE TABLE net (
-  id TEXT GENERATED ALWAYS AS ( left(md5(type||len::text||host),6) ) STORED,
-  type TEXT default 'pub',
-  len INT default 4,
-  host TEXT REFERENCES host,
-  address TEXT,
-  subnet INT default 32,
-  template TEXT default 'none',
-  PRIMARY KEY (id)
-);
 
 CREATE TABLE vm (
   id TEXT GENERATED ALWAYS AS ( left(md5(name||host),8) ) STORED,
   name TEXT,
   host TEXT REFERENCES host,
   profile TEXT,
+  ipv4 TEXT,
+  ipv6 TEXT,
   PRIMARY KEY (id)
 );
-
-CREATE TABLE addr (
-  seq INT,
-  net_id TEXT REFERENCES net,
-  vm_id TEXT REFERENCES vm,
-  address TEXT,
-  PRIMARY KEY (seq, net_id)
-);
-
-
-CREATE FUNCTION populate_net(p_net_id TEXT) RETURNS INT
-AS \$\$
-DECLARE
-  v_template TEXT;
-  v_host TEXT;
-BEGIN
-  SELECT host, template INTO v_host, v_template FROM net WHERE id = p_net_id;
-
-  FOR index IN 10..100 LOOP
-    INSERT INTO addr (seq,net_id,address)
-    VALUES (index, p_net_id, replace(v_template,'*',index::text) );
-  END LOOP;
-
-  RETURN 0;
-end;
-\$\$ LANGUAGE PLPGSQL;
-
-
-CREATE FUNCTION populate_address(p_host TEXT) RETURNS INT
-AS \$\$
-DECLARE
-  v_net_id TEXT;
-BEGIN
-  FOR v_net_id in SELECT id FROM net WHERE host = p_host AND type = 'dhcp' LOOP
-    PERFORM populate_net(v_net_id);
-  END LOOP;
-
-  RETURN 0;
-end;
-\$\$ LANGUAGE PLPGSQL;
-
-
-CREATE FUNCTION add_vm_addr(p_vm_id TEXT, p_net_id TEXT) RETURNS TEXT
-AS \$\$
-DECLARE
-  v_seq INT;
-  v_address TEXT;
-BEGIN
-  SELECT seq, address INTO v_seq, v_address
-  FROM system.addr a JOIN generate_series(10,100) as sq ON sq = a.seq
-  WHERE net_id = p_net_id and vm_id is null LIMIT 1;
-
-  UPDATE system.addr SET vm_id = p_vm_id
-  WHERE net_id = p_net_id AND seq = v_seq;
-
-  return v_address;
-
-end;
-\$\$ LANGUAGE PLPGSQL;
-
 
 
 CREATE FUNCTION add_vm(p_host TEXT, p_vm_name TEXT, p_profiles TEXT) RETURNS INT
@@ -103,15 +35,10 @@ BEGIN
   INSERT INTO system.vm (name, host, profile)
   VALUES (p_vm_name, p_host, p_profiles) RETURNING id INTO v_vm_id;
 
-  FOR v_net_id IN SELECT id FROM system.net WHERE type = 'dhcp' AND host = p_host
-  LOOP
-    PERFORM system.add_vm_addr(v_vm_id, v_net_id);
-    RAISE NOTICE 'add_vm_addr % %', v_vm_id, v_net_id;
-  END LOOP;
-
   RETURN 0;
 end;
 \$\$ LANGUAGE PLPGSQL;
+
 
 CREATE FUNCTION remove_vm(p_host TEXT, p_vm_name TEXT) RETURNS INT
 AS \$\$
@@ -126,39 +53,10 @@ end;
 \$\$ LANGUAGE PLPGSQL;
 
 
-CREATE VIEW vm_addr_view AS
-  SELECT vm.id, vm.name, vm.host, net.len, addr.address
-  FROM addr
-  LEFT JOIN net ON net.id = addr.net_id
-  LEFT JOIN vm ON vm.id = addr.vm_id
-  WHERE addr.vm_id IS NOT NULL;
-
-
 INSERT INTO host (host,ram,cpu,disk) VALUES
 ('fs1701.pilet.cloud', 128, 32, 6000),
 ('fs1702.pilet.cloud', 128, 32, 6000),
 ('fs1703.pilet.cloud', 128, 32, 6000);
 
-INSERT INTO net (host,address) VALUES
-('fs1701.pilet.cloud', '142.132.204.215'),
-('fs1702.pilet.cloud', '142.132.206.130'),
-('fs1703.pilet.cloud', '94.130.54.233');
-
-INSERT INTO net (type,host,address,subnet,template) VALUES
-('dhcp','fs1701.pilet.cloud', '192.168.1.1', 16, '192.168.1.*'),
-('dhcp','fs1702.pilet.cloud', '192.168.2.1', 16, '192.168.2.*'),
-('dhcp','fs1703.pilet.cloud', '192.168.3.1', 16, '192.168.3.*');
-
-
-INSERT INTO net (type,host,address,subnet,template,len) VALUES
-('dhcp','fs1701.pilet.cloud', '2a01:4f8:261:5103::2', 64, '2a01:4f8:261:5103::*', 6),
-('dhcp','fs1702.pilet.cloud', '2a01:4f8:261:52da::2', 64, '2a01:4f8:261:52da::*', 6),
-('dhcp','fs1703.pilet.cloud', '2a01:4f8:10b:2c49::2', 64, '2a01:4f8:10b:2c49::*', 6);
-
-SELECT populate_address('fs1701.pilet.cloud');
-SELECT populate_address('fs1702.pilet.cloud');
-SELECT populate_address('fs1703.pilet.cloud');
-
-SELECT add_vm('fs1701.pilet.cloud','uno-testing','lg');
 
 EOF
