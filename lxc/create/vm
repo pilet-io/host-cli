@@ -17,7 +17,7 @@ while true; do
   IPV6=$(lxc exec hey ip addr | grep 2a01 | awk '{print $2}')
   IPV4=$(lxc exec hey ip addr | grep 192. | awk '{print $2}')
   IPV6=${IPV6/\/64/}
-  IPV4=$(IPV4/\/16/)
+  IPV4=${IPV4/\/16/}
   if [ ! -z "$IPV6" ] && [ ! -z "$IPV4" ]; then
     echo "ipv4 is $IPV4 and ipv6 is $IPV6"
     break
