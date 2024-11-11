@@ -1,7 +1,12 @@
 #!/bin/bash
 
-#> [name]=?
+#> [name]=some
 
-lxc stop $NAME
-lxc delete $NAME
-store_vm_remove $NAME
+lxc config show $NAME > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+  lxc stop $NAME
+  lxc delete $NAME
+  store_vm_remove $NAME
+else
+  echo "Container $NAME not found"
+fi
