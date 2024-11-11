@@ -13,6 +13,8 @@ for profile in ${PROFILES/,/ }; do
   OPTIONS="$OPTIONS --profile $profile"
 done
 
+store_vm_remove $NAME > /dev/null
+
 echo "Initializing $NAME with $OPTIONS"
 lxc init ubuntu:24.04 $NAME $OPTIONS
 store_vm_add $NAME $PROFILES
