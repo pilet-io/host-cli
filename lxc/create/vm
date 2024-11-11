@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#> [name]=some [profile]=md
+#> [name]=some [profiles]=md
 
 lxc config show $NAME > /dev/null 2>&1
 if [ $? -eq 0 ]; then
