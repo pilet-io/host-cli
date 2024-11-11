@@ -19,7 +19,8 @@ while true; do
   IPV6=${IPV6/\/64/}
   IPV4=${IPV4/\/16/}
   if [ ! -z "$IPV6" ] && [ ! -z "$IPV4" ]; then
-    echo "ipv4 is $IPV4 and ipv6 is $IPV6"
+    echo "IPs are $IPV4, $IPV6"
+    store_vm_add_ip $NAME $IPV4 $IPV6
     break
   fi
 done
