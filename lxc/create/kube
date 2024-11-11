@@ -16,7 +16,7 @@ ufw allow from 10.42.0.0/16 to any #pods
 ufw allow from 10.43.0.0/16 to any #services
 
 #curl -sfL https://get.k3s.io | sh -
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--kubelet-arg="node-ip=::" --cluster-cidr=10.42.0.0/16,2001:cafe:42::/56 --service-cidr=10.43.0.0/16,2001:cafe:43::/112' sh -s -
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--cluster-cidr=10.42.0.0/16,2001:cafe:42::/56 --service-cidr=10.43.0.0/16,2001:cafe:43::/112" sh -s -
 EOF
 
 echo "Kubernetes master $NAME is created"
