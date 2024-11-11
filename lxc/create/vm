@@ -11,3 +11,13 @@ echo "Initializing $NAME with $OPTIONS"
 lxc init ubuntu:24.04 $NAME $OPTIONS
 store_vm_add $NAME $PROFILES
 lxc start $NAME
+
+while true; do
+  sleep 1s
+  IPV6=$(lxc exec hey ip addr | grep 2a01 | awk '{print $2}')
+  IPV6=${IPV6/\/64/}
+  if [ ! -z "$IPV6" ]; then
+    echo "ipv6 is $IPV6"
+    break
+  fi
+done
