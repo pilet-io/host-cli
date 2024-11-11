@@ -16,7 +16,7 @@ done
 store_vm_remove $NAME > /dev/null
 
 echo "Initializing $NAME with $OPTIONS"
-lxc init ubuntu:24.04 $NAME $OPTIONS
+lxc init ubuntu:24.04 $NAME --vm $OPTIONS
 store_vm_add $NAME $PROFILE
 lxc start $NAME
 
