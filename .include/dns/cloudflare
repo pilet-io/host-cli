@@ -47,7 +47,7 @@ function dns_create_record() {
   CONTENT=$4
 
   OUT=$(dns_list_records $ZONE | grep $NAME.$ZONE)
-  if [ -z "$OUT" ]; then
+  if [ ! -z "$OUT" ]; then
     echo "$NAME.$ZONE is already defined"
     exit 0
   fi
