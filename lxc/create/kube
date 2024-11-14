@@ -23,7 +23,7 @@ echo "Kubernetes master $NAME is created"
 IPV4=$(store_get_vm_addr4 $NAME)
 dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
 
-cat <<EOF > ~/.config/service/${NAME}.yaml
+cat <<EOF > ~/.config/services/${NAME}.yaml
 http:
   routers:
     route-$NAME:

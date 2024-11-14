@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#> [name]=some
+
+dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
