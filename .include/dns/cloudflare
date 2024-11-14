@@ -46,6 +46,12 @@ function dns_create_record() {
   ZONE=$3
   CONTENT=$4
 
+  OUT=$(dns_list_records $ZONE | grep $NAME.$ZONE)
+  if [ -z "$OUT" ]; then
+    echo "$NAME.$ZONE is already defined"
+    exit 0
+  fi
+
   ZONE_ID=$(dns_zone_id $ZONE)
   curl -s --request POST \
     --url https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records \
