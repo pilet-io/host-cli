@@ -9,14 +9,16 @@ function dns_list_zones() {
    | jq -r '.result[] | .id + " " + .name'
 }
 
+
+function dns_save_zone_db() {
+  echo "$1, $2"
+}
+
+
 function dns_save_zones_db() {
     output=$(dns_list_zones)
-    for zone in $output; do
-      echo "zone=$zone"
-    done
-
     while IFS= read -r line; do
-        echo "... $line ..."
+      dns_save_zone_db $line
     done <<< "$output"
 }
 
