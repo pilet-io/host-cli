@@ -2,5 +2,5 @@
 
 #> [name]=some
 
-dns_list_zones
+dns_save_zones_db
 #dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME

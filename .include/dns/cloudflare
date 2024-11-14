@@ -1,13 +1,20 @@
 #!/bin/bash
 
 function dns_list_zones() {
-  curl --request GET \
+  curl -s --request GET \
     --url https://api.cloudflare.com/client/v4/zones \
     --header 'Content-Type: application/json' \
     --header "X-Auth-Email: ${WITH_DNS_USER}" \
     --header "X-Auth-Key: ${WITH_DNS_PASSWORD}" \
    | jq -r '.result[] | .id + " " + .name + " " + .status'
 }
+
+function dns_save_zones_db() {
+    for zone in $(dns_list_zones); do
+      echo "zone=$zone"
+    done
+}
+
 
 function dns_zone_id() {
   ZONE=$1
@@ -36,7 +43,7 @@ function dns_create_record() {
   ZONE_ID=$(dns_zone_id $ZONE)
   echo "ZONE_ID: $ZONE_ID"
 
-  curl --request POST \
+  curl -s --request POST \
     --url https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records \
     --header 'Content-Type: application/json' \
     --header "X-Auth-Email: ${WITH_DNS_USER}" \

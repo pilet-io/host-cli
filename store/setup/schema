@@ -25,6 +25,11 @@ CREATE TABLE vm (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE dns_zone (
+  id TEXT PRIMARY KEY,
+  zone TEXT
+);
+
 
 CREATE FUNCTION add_vm(p_host TEXT, p_vm_name TEXT, p_profiles TEXT) RETURNS TEXT
 AS \$\$
