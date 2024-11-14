@@ -1,8 +1,6 @@
 #!/bin/bash
 
 function dns_list_zones() {
-#  echo "Auth-Email: $WITH_DNS_USER"
-#  echo "Auth-Key: $WITH_DNS_PASSWORD"
   curl --request GET \
     --url https://api.cloudflare.com/client/v4/zones \
     --header 'Content-Type: application/json' \
