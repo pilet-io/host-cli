@@ -11,13 +11,36 @@ fi
 cat <<EOF | lxc shell $NAME
 apt update
 ufw disable
-ufw allow 6443/tcp #apiserver
-ufw allow from 10.42.0.0/16 to any #pods
-ufw allow from 10.43.0.0/16 to any #services
+#ufw allow 6443/tcp #apiserver
+#ufw allow from 10.42.0.0/16 to any #pods
+#ufw allow from 10.43.0.0/16 to any #services
 
 curl -sfL https://get.k3s.io | sh -
 EOF
 
 echo "Kubernetes master $NAME is created"
 
+IPV4=$(store_get_vm_addr4 $NAME)
+dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
+
+cat <<EOF > ~/.config/service/${NAME}.yaml
+http:
+  routers:
+    route-$NAME:
+      rule: "Host(`${NAME}.pilet.site`)"
+      tls:
+        certResolver: resolver0
+        domains:
+          - main: "*.pilet.site"
+      service: service-$NAME
+      priority: 1000
+      entryPoints:
+        - https
+
+  services:
+    service-$NAME:
+      loadBalancer:
+        servers:
+          - url: "http://${IPV4}:80"
+EOF
 
