@@ -11,7 +11,7 @@ function dns_list_zones() {
 
 
 function dns_save_zone_db() {
-  echo "$1, $2"
+  echo "INSERT INTO system.dns_zone VALUES('$1', '$2')" | store_sys
 }
 
 
