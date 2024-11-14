@@ -34,13 +34,14 @@ function dns_create_record() {
   CONTENT=$4
 
   ZONE_ID=$(dns_zone_id $ZONE)
+  echo "ZONE_ID: $ZONE_ID"
 
-  curl -s --request POST \
+  curl --request POST \
     --url https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records \
     --header 'Content-Type: application/json' \
     --header "X-Auth-Email: ${WITH_DNS_USER}" \
     --header "X-Auth-Key: ${WITH_DNS_PASSWORD}" \
-    --data @- <<EOF | jq -r '.result.id + " " + .result.name + " " + .result.type + " " + .result.content'
+    --data @- <<EOF #| jq -r '.result.id + " " + .result.name + " " + .result.type + " " + .result.content'
 {
   "content": "$CONTENT",
   "name": "$NAME.$ZONE",
