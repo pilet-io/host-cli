@@ -25,7 +25,7 @@ function dns_save_zones_db() {
 
 function dns_zone_id() {
   ZONE=$1
-  echo "SELECT id FROM system.dns_zone WHERE zone = '$ZONE'" | store_sys_cvs
+  echo "SELECT id FROM system.dns_zone WHERE zone = '$ZONE'" | store_sys_csv
 }
 
 function dns_list_records() {
