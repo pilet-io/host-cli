@@ -1,14 +1,14 @@
 #!/bin/bash
 
 function dns_list_zones() {
-  echo "Auth-Email: $WITH_DNS_USER"
-  echo "Auth-Key: $WITH_DNS_PASSWORD"
+#  echo "Auth-Email: $WITH_DNS_USER"
+#  echo "Auth-Key: $WITH_DNS_PASSWORD"
   curl --request GET \
     --url https://api.cloudflare.com/client/v4/zones \
     --header 'Content-Type: application/json' \
     --header "X-Auth-Email: ${WITH_DNS_USER}" \
     --header "X-Auth-Key: ${WITH_DNS_PASSWORD}" \
-   #| jq -r '.result[] | .id + " " + .name + " " + .status'
+   | jq -r '.result[] | .id + " " + .name + " " + .status'
 }
 
 function dns_zone_id() {
