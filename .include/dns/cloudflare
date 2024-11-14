@@ -10,7 +10,7 @@ function dns_list_zones() {
 }
 
 function dns_save_zones_db() {
-    for zone in "$(dns_list_zones)"; do
+    for zone in $(dns_list_zones); do
       echo "zone=$zone"
     done
 }
