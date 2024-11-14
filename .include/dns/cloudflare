@@ -6,11 +6,11 @@ function dns_list_zones() {
     --header 'Content-Type: application/json' \
     --header "X-Auth-Email: ${WITH_DNS_USER}" \
     --header "X-Auth-Key: ${WITH_DNS_PASSWORD}" \
-   | jq -r '.result[] | .id + " " + .name + " " + .status'
+   | jq -r '.result[] | .id + " " + .name'
 }
 
 function dns_save_zones_db() {
-    for zone in $(dns_list_zones); do
+    for zone in "$(dns_list_zones)"; do
       echo "zone=$zone"
     done
 }
