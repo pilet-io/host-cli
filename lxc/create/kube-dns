@@ -2,6 +2,6 @@
 
 #> [name]=some
 
-dns_zone_id 'pilet.size'
+dns_zone_id 'pilet.site'
 
 #dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
