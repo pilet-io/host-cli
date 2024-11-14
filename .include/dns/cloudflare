@@ -14,6 +14,10 @@ function dns_save_zones_db() {
     for zone in $output; do
       echo "zone=$zone"
     done
+
+    while IFS= read -r line; do
+        echo "... $line ..."
+    done <<< "$output"
 }
 
 
