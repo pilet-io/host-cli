@@ -2,4 +2,5 @@
 
 #> [name]=some
 
-dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
+dns_list_records 'pilet.site'
+#dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
