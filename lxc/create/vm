@@ -15,7 +15,6 @@ done
 
 store_vm_remove $NAME > /dev/null
 
-echo "Initializing $NAME with $OPTIONS"
 lxc init ubuntu:24.04 $NAME --vm $OPTIONS
 store_vm_add $NAME $PROFILE
 lxc start $NAME
@@ -23,7 +22,7 @@ lxc start $NAME
 while true; do
   sleep 2s
   IPV6=$(lxc exec $NAME ip addr 2>/dev/null | grep 2a01 | awk '{print $2}')
-  IPV4=$(lxc exec $NAME ip addr 2>/dev/null | grep 10. | awk '{print $2}')
+  IPV4=$(lxc exec $NAME ip addr 2>/dev/null | grep 'inet 10' | awk '{print $2}')
   echo -n "."
   IPV6=${IPV6/\/64/}
   IPV4=${IPV4/\/24/}
