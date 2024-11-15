@@ -23,10 +23,10 @@ lxc start $NAME
 while true; do
   sleep 2s
   IPV6=$(lxc exec $NAME ip addr 2>/dev/null | grep 2a01 | awk '{print $2}')
-  IPV4=$(lxc exec $NAME ip addr 2>/dev/null | grep 192. | awk '{print $2}')
+  IPV4=$(lxc exec $NAME ip addr 2>/dev/null | grep 10. | awk '{print $2}')
   echo -n "."
   IPV6=${IPV6/\/64/}
-  IPV4=${IPV4/\/16/}
+  IPV4=${IPV4/\/24/}
   if [ ! -z "$IPV6" ] && [ ! -z "$IPV4" ]; then
     echo ""
     echo "IPs are $IPV4, $IPV6"
