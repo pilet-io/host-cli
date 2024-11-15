@@ -9,13 +9,10 @@ if [ $? -ne 0 ]; then
 fi
 
 cat <<EOF | lxc shell $NAME
-apt update
-ufw disable
-#ufw allow 6443/tcp #apiserver
-#ufw allow from 10.42.0.0/16 to any #pods
-#ufw allow from 10.43.0.0/16 to any #services
-
-curl -sfL https://get.k3s.io | sh -
+git clone https://github.com/pilet-io/vm-cli.git
+mv /root/vm-cli /root/cli
+echo "export PATH=\$PATH:/root/cli" >> /root/.profile
+/root/cli/with k8s create cluster
 EOF
 
 echo "Kubernetes master $NAME is created"
