@@ -54,7 +54,40 @@ function vm_delete() {
 }
 
 
-function vm_save_profile() {
+function vm_save_uno_profile() {
+  # 1 4 100 small
+  CPU=$1
+  RAM=$2
+  DISK=$3
+  NAME=$4
+  echo "Saving LXC profile $NAME : $CPU $RAM $DISK"
+  lxc profile create ${NAME}
+
+  cat <<EOF | lxc profile edit ${NAME}
+config:
+  limits.cpu: "${CPU}"
+  limits.memory: ${RAM}GB
+  cloud-init.network-config: |
+    version: 2
+    ethernets:
+      enp5s0:
+        dhcp4: true
+description: ${NAME} size profile
+devices:
+  enp5s0:
+    name: enp5s0
+    network: br0
+    type: nic
+  root:
+    path: /
+    pool: default
+    size: ${DISK}GB
+    type: disk
+EOF
+}
+
+
+function vm_save_dos_profile() {
   # 1 4 100 small
   CPU=$1
   RAM=$2
@@ -90,12 +123,4 @@ devices:
     size: ${DISK}GB
     type: disk
 EOF
-}
-
-function vm_save_profiles() {
-  vm_save_profile 1 4 120 sm
-  vm_save_profile 2 8 240 md
-  vm_save_profile 4 16 480 lg
-  vm_save_profile 8 32 960 xl
-  vm_save_profile 16 64 1920 xxl
 }

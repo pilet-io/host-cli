@@ -2,6 +2,9 @@
 
 #> 
 
-vm_save_profiles
-
+vm_save_uno_profile 1 4 120 sm
+vm_save_uno_profile 2 8 240 md
+vm_save_uno_profile 4 16 480 lg
+vm_save_uno_profile 8 32 960 xl
+vm_save_uno_profile 16 64 1920 xxl
 
