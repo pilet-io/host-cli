@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#> [name]=some
+#> [name]=some [profile]=md
 
-with lxc create vm --name $NAME --profile md
+with lxc create vm --name $NAME --profile $PROFILE
 if [ $? -ne 0 ]; then
   echo "Failed creating container $NAME"
   exit 1
