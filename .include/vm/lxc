@@ -174,5 +174,9 @@ devices:
     name: enp6s0
     network: br1
     type: nic
+  root:
+    path: /
+    pool: default
+    type: disk
 EOF
 }
