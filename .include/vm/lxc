@@ -177,6 +177,7 @@ devices:
   root:
     path: /
     pool: default
+    size: 960GB
     type: disk
 EOF
 }
