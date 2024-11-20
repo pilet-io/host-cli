@@ -4,7 +4,7 @@
 
 for host in fs1701 fs1702 fs1703; do
  HOST=$host.pilet.cloud
- ssh -t root@$HOST <<EOF
+ ssh -t -q root@$HOST <<EOF
  bash -c 'with lxc delete vm --name $NAME'
 EOF
 done
