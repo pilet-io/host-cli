@@ -52,7 +52,7 @@ else
 fi
 
 while true; do
-  DONE=$(lxc exec $NAME -- cat /root/.done)
+  DONE=$(lxc exec $NAME -- cat /root/.done 2>/dev/null)
   if [[ "$DONE" == "done" ]]; then
     echo "Done"
     break
