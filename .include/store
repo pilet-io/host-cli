@@ -32,7 +32,7 @@ function store_get_vm_addr4() {
 function store_kv_set() {
   KEY=$1
   VALUE=$2
-  echo "INSERT INTO system.kv (id,value) VALUES('$KEY','$VALUE') ON CONFLICT (id) did) DO UPDATE SET value = EXCLUDED.value" | store_sys
+  echo "INSERT INTO system.kv (id,value) VALUES('$KEY','$VALUE') ON CONFLICT (id) DO UPDATE SET value = EXCLUDED.value" | store_sys
 }
 
 function store_kv_get() {
