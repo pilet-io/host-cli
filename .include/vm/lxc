@@ -124,3 +124,18 @@ devices:
     type: disk
 EOF
 }
+
+
+function vm_save_profile_base() {
+  echo "Saving base profile"
+  lxc profile create base
+
+  cat <<EOF | lxc profile edit base
+config:
+  cloud-init.user-data: |
+    #cloud-config
+    runcmd:
+      - echo "abc" > /tmp/hello
+description: Basic profile
+EOF
+}
