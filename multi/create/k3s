@@ -4,8 +4,6 @@
 
 for host in fs1701 fs1702 fs1703; do
  HOST=$host.pilet.cloud
- ssh root@$HOST <<EOF
- with lxc create vm --name $NAME --profile $PROFILE
-EOF
+ ssh root@$HOST bash -l -c 'with lxc create vm --name $NAME --profile $PROFILE'
 done
 
