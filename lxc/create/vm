@@ -8,7 +8,7 @@ if [ $? -eq 0 ]; then
   exit 1
 fi
 
-OPTIONS=""
+OPTIONS="--profile base"
 for profile in ${PROFILE/,/ }; do
   OPTIONS="$OPTIONS --profile $profile"
 done
@@ -51,8 +51,12 @@ else
   done
 fi
 
-cat<<EOF | lxc shell $NAME
-git clone https://github.com/pilet-io/vm-cli.git
-mv /root/vm-cli /root/cli
-echo "export PATH=\$PATH:/root/cli" >> /root/.profile
-EOF
+while true; do
+  DONE=$(lxc exec $NAME -- cat /root/.done)
+  if [[ "$DONE" == "done" ]]; then
+    echo "Done"
+    break
+  fi
+  echo -n "."
+  sleep 1s
+done
