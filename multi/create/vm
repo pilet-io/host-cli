@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#> [name]=sys-main [profile]=lg,vlan
+
+for host in fs1701 fs1702 fs1703; do
+ HOST=$host.pilet.cloud
+ ssh -t root@$HOST bash -l -c "'with lxc create vm --name $NAME --profile $PROFILE'"
+done
+
