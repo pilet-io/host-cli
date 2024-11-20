@@ -3,6 +3,7 @@
 #> [name]=sys-main [profile]=lx,vlan
 
 for host in fs1701 fs1702 fs1703; do
- echo "host = $host.pilet.cloud"
+ HOST=$host.pilet.cloud
+ echo "Host = $HOST"
 done
 
