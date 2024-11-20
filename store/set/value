@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#> [key]=? [value]=?
+
+store_kv_set $KEY $VALUE

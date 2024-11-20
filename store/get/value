@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#> [key]=?
+
+store_kv_get $KEY

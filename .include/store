@@ -28,3 +28,14 @@ function store_get_vm_addr4() {
   echo "SELECT ipv4 FROM system.vm WHERE \
   host = '$SYS_HOSTNAME' AND name = '$1'  " | store_sys_csv
 }
+
+function store_kv_set() {
+  KEY=$1
+  VALUE=$2
+  echo "INSERT INTO system.kv (id,value) VALUES('$KEY','$VALUE') ON CONFLICT (id) did) DO UPDATE SET value = EXCLUDED.value" | store_sys
+}
+
+function store_kv_get() {
+  KEY=$1
+  echo "SELECT value FROM system.kv WHERE id = '$KEY'" | store_sys_csv
+}
