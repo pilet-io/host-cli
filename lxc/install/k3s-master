@@ -3,7 +3,7 @@
 #> [name]=sys-main
 
 cat <<EOF | lxc shell $NAME
-curl -sfL https://get.k3s.io | sh -
+with k3s create cluster
 EOF
 
 
