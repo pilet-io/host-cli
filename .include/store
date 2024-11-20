@@ -29,6 +29,12 @@ function store_get_vm_addr4() {
   host = '$SYS_HOSTNAME' AND name = '$1'  " | store_sys_csv
 }
 
+# store_vm_addr4 NAME HOST
+function store_vm_addr4() {
+  echo "SELECT ipv4 FROM system.vm WHERE \
+  host = '$2' AND name = '$1'  " | store_sys_csv
+}
+
 function store_kv_set() {
   KEY=$1
   VALUE=$2

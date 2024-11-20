@@ -6,4 +6,7 @@ cat <<EOF | lxc shell $NAME
 with k3s create cluster
 EOF
 
+TOKEN=$(lxc exec uno -- cat /var/lib/rancher/k3s/server/token)
+with store set value --key ${NAME}.token --value $TOKEN
+
 

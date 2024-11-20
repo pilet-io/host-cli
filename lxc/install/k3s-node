@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#> [name]=sys-main
+
+MASTER=$(store_vm_addr4 $NAME fs1701.pilet.cloud)
+TOKEN=$(with store get value --key ${NAME}.token)
+
+cat <<EOF | lxc shell $NAME
+with k3s create node --master $MASTER --node $NODE
+EOF
