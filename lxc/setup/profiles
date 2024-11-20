@@ -9,4 +9,6 @@ vm_save_uno_profile 8 32 960 xl
 vm_save_uno_profile 16 64 1920 xxl
 
 vm_save_profile_base
+vm_save_profile_vlan
+
 
