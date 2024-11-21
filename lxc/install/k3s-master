@@ -3,10 +3,10 @@
 #> [name]=sys-main
 
 cat <<EOF | lxc shell $NAME
-with k3s create cluster
+with k8s create cluster
 EOF
 
-TOKEN=$(lxc exec uno -- cat /var/lib/rancher/k3s/server/token)
-with store set value --key ${NAME}.token --value $TOKEN
+#TOKEN=$(lxc exec uno -- cat /var/lib/rancher/k3s/server/token)
+#with store set value --key ${NAME}.token --value $TOKEN
 
 
