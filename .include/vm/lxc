@@ -153,7 +153,8 @@ config:
   cloud-init.user-data: |
     #cloud-config
     runcmd:
-      #- git clone https://github.com/pilet-io/vm-cli.git /root/cli
+      - sleep 7s
+      - git clone https://github.com/pilet-io/vm-cli.git /root/cli
       - echo -n "export PATH=\$" >> /root/.profile
       - echo "PATH:/root/cli" >> /root/.profile
       - echo "done" > /root/.done
