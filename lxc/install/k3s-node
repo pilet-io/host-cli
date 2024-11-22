@@ -6,4 +6,4 @@ MASTER=$(with store get value --key ${CLUSTER}/ip4)
 TOKEN=$(with store get value --key ${CLUSTER}/token)
 echo "Installing with $MASTER, $TOKEN"
 
-lxc exec $NAME -- K3S_URL=https://${MASTER}:6443 K3S_TOKEN=${TOKEN} /root/cli/scripts/k3s-install.sh
+lxc exec $NAME -- bash -c "K3S_URL=https://${MASTER}:6443 K3S_TOKEN=${TOKEN} /root/cli/scripts/k3s-install.sh"
