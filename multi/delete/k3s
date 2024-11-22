@@ -1,5 +1,0 @@
-#!/bin/bash
-
-#> [name]=sys-main
-
-with mutli delete vm --name $NAME
