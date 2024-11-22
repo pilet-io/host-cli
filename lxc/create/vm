@@ -34,6 +34,7 @@ if [[ $PROFILE =~ "vlan" ]]; then
       break
     fi
   done
+  sleep 5s
 else
   while true; do
     sleep 2s
