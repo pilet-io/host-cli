@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#>
+
+for host in fs1701 fs1702 fs1703; do
+  HOSTNAME=$host.pilet.cloud
+  ssh -t root@${HOSTNAME} bash -l -c "'git -C /root/cli pull'"
+  ssh -t root@${HOSTNAME} bash -l -c "'with lxc setup profiles'"
+done
