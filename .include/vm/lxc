@@ -157,6 +157,7 @@ config:
       - git clone https://github.com/pilet-io/vm-cli.git /root/cli
       - echo -n "export PATH=\$" >> /root/.profile
       - echo "PATH:/root/cli" >> /root/.profile
+      - /root/cli/scripts/install.sh
       - echo "done" > /root/.done
   cloud-init.network-config: |
     version: 2
