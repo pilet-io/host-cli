@@ -2,9 +2,7 @@
 
 #> [name]=sys-main
 
-MASTER=$(store_vm_addr4 $NAME fs1701.pilet.cloud)
-TOKEN=$(with store get value --key ${NAME}.token)
+MASTER=$(with store get value --key ${NAME}/ip4)
+TOKEN=$(with store get value --key ${NAME}/token)
 
-cat <<EOF | lxc shell $NAME
-with k3s create node --master $MASTER --node $NODE
-EOF
+lxc exec $NAME -- K3S_URL=https://${MASTER}:6443 K3S_TOKEN=${TOKEN} /root/cli/scripts/k3s-install.sh
