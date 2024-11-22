@@ -5,4 +5,4 @@
 lxc exec $NAME -- /root/cli/scripts/k3s-install.sh
 
 TOKEN=$(lxc exec $NAME -- cat /var/lib/rancher/k3s/server/token)
-with store set value --key ${SYS_HOSTNAME}/${NAME}/token --value $TOKEN
+with store set value --key ${NAME}/token --value $TOKEN
