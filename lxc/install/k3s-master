@@ -2,11 +2,9 @@
 
 #> [name]=sys-main
 
-cat <<EOF | lxc shell $NAME
-with k3s create cluster
-EOF
+lxc exec $NAME -- /root/cli/scripts/k3s-install.sh
 
-TOKEN=$(lxc exec uno -- cat /var/lib/rancher/k3s/server/token)
-with store set value --key ${NAME}.token --value $TOKEN
+#TOKEN=$(lxc exec uno -- cat /var/lib/rancher/k3s/server/token)
+#with store set value --key ${NAME}.token --value $TOKEN
 
 
