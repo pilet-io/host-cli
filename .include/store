@@ -29,6 +29,13 @@ function store_get_vm_addr4() {
   host = '$SYS_HOSTNAME' AND name = '$1'  " | store_sys_csv
 }
 
+# store_get_vm_addr6 NAME
+function store_get_vm_addr6() {
+  echo "SELECT ipv6 FROM system.vm WHERE \
+  host = '$SYS_HOSTNAME' AND name = '$1'  " | store_sys_csv
+}
+
+
 # store_vm_addr4 NAME HOST
 function store_vm_addr4() {
   echo "SELECT ipv4 FROM system.vm WHERE \
