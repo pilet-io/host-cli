@@ -7,11 +7,11 @@ for host in fs1701 fs1702 fs1703; do
 HOSTNAME=$host.pilet.cloud
 ssh -t root@$HOSTNAME <<EOF
 with lxc create vm --name $NAME --profile $PROFILE
-if [ "$STEP" -gt 0 ]; then
-  with lxc install k6s-node --name $NAME --cluster $NAME
-else
-  with lxc install k6s-master --name $NAME
-fi
+#if [ "$STEP" -gt 0 ]; then
+#  with lxc install k6s-node --name $NAME --cluster $NAME
+#else
+#  with lxc install k6s-master --name $NAME
+#fi
 EOF
 STEP=$((STEP+1))
 done
