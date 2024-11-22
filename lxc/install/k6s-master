@@ -3,7 +3,7 @@
 #> [name]=sys-main
 
 IP6=$(store_get_vm_addr6 $NAME)
-INSTALL_K3S_EXEC="server --node-ip ${IP6} --cluster-cidr 2001:cafe:42:0::/56 --service-cidr 2001:cafe:43:1::/112"
+INSTALL_K3S_EXEC="server --node-ip ${IP6} --cluster-cidr 2001:cafe:42:0::/56 --service-cidr 2001:cafe:43:1::/112 --flannel-ipv6-masq"
 echo "INSTALL_K3S_EXEC=$INSTALL_K3S_EXEC"
 lxc exec $NAME -- bash -l -c "INSTALL_K3S_EXEC=\"${INSTALL_K3S_EXEC}\" /root/cli/scripts/k3s-install.sh"
 
