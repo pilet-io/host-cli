@@ -2,16 +2,13 @@
 
 #> [name]=sys-main [profile]=lg
 
-STEP=0
 for host in fs1701 fs1702 fs1703; do
-HOSTNAME=$host.pilet.cloud
-ssh -t root@$HOSTNAME <<EOF
-with lxc create vm --name $NAME --profile $PROFILE
-#if [ "$STEP" -gt 0 ]; then
-#  with lxc install k6s-node --name $NAME --cluster $NAME
-#else
-#  with lxc install k6s-master --name $NAME
-#fi
-EOF
-STEP=$((STEP+1))
+ HOSTNAME=$host.pilet.cloud
+ ssh -t root@HOSTNAME bash -l -c "'with lxc create vm --name $NAME'"
 done
+
+#with multi create vm --name $NAME --profile $PROFILE
+
+#ssh -t root@fs1701.pilet.cloud bash -l -c "'with lxc install k6s-master --name $NAME'"
+#ssh -t root@fs1702.pilet.cloud bash -l -c "'with lxc install k6s-node --name $NAME --cluster $NAME'"
+#ssh -t root@fs1703.pilet.cloud bash -l -c "'with lxc install k6s-node --name $NAME --cluster $NAME'"
