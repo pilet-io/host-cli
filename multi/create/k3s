@@ -2,7 +2,7 @@
 
 #> [name]=sys-main [profile]=lg,vlan
 
-with multi create vm --name $NAME --profile $PROFILE
+#with multi create vm --name $NAME --profile $PROFILE
 
 cat <<EOF | ssh root@fs1701.pilet.cloud
 with lxc install k3s-master --name $NAME
