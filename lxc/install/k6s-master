@@ -4,10 +4,8 @@
 
 IP6=$(store_get_vm_addr4 $NAME)
 
-cat<<EOF | lxc shell $NAME
-export INSTALL_K3S_EXEC="server --node-ip ${IP6} --cluster-cidr 2001:cafe:42:0::/56 --service-cidr 2001:cafe:43:1::/112"
-/root/cli/scripts/k3s-install.sh
-EOF
+lxc exec $NAME -- bash -c 'INSTALL_K3S_EXEC="server --node-ip ${IP6} --cluster-cidr 2001:cafe:42:0::/56 --service-cidr 2001:cafe:43:1::/112" /root/cli/scripts/k3s-install.sh'
+
 
 TOKEN=$(lxc exec $NAME -- cat /var/lib/rancher/k3s/server/token)
 with store set value --key ${NAME}/token --value $TOKEN
