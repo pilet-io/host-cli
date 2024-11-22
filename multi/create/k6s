@@ -5,12 +5,12 @@
 STEP=0
 for host in fs1701 fs1702 fs1703; do
   HOSTNAME=$host.pilet.cloud
-  ssh -t root@${HOSTNAME} bash -l -c "'with lxc create vm --name $NAME-$STEP --profile $PROFILE"
+  ssh -t root@${HOSTNAME} bash -l -c "'with lxc create vm --name ${NAME}${STEP} --profile $PROFILE"
   if [[ "$host" == "fs1701" ]]; then
-    ssh -t root@${HOSTNAME} bash -l -c "'with lxc install k6s-master --name $NAME-$STEP'"
+    ssh -t root@${HOSTNAME} bash -l -c "'with lxc install k6s-master --name ${NAME}${STEP}'"
     sleep 10s
   else
-    ssh -t root@${HOSTNAME} bash -l -c "'with lxc install k6s-node --name $NAME-$STEP --cluster $NAME-0'"
+    ssh -t root@${HOSTNAME} bash -l -c "'with lxc install k6s-node --name ${NAME}${STEP} --cluster ${NAME}0'"
   fi
   STEP=$((STEP+1))
 done
