@@ -1,0 +1,51 @@
+#!/bin/bash
+
+#>
+
+wget https://github.com/traefik/traefik/releases/download/v3.2.1/traefik_v3.2.1_linux_amd64.tar.gz
+tar -zxvf traefik_v3.2.1_linux_amd64.tar.gz
+rm CHANGELOG.md LICENSE.md traefik_v3.2.1_linux_amd64.tar.gz
+cp traefik /usr/local/bin
+
+mkdir -p /etc/trafik/services
+cat <<EOF | tee /etc/traefik/traefik.yaml
+## Static configuration
+entryPoints:
+  http:
+    address: ":80"
+  https:
+    address: ":443"
+
+certificatesResolvers:
+  resolver0:
+    acme:
+      email: "potapov@yahoo.com"
+      storage: /etc/traefik/acme.json
+      dnsChallenge:
+        provider: cloudflare
+        delayBeforeCheck: 0
+
+providers:
+  file:
+    directory: /etc/traefik/services
+    watch: true
+EOF
+
+
+cat <<EOF | tee /etc/systemd/system/traefik.service
+[Unit]
+Description=traefik proxy
+After=network-online.target
+Wants=network-online.target systemd-networkd-wait-online.service
+
+[Service]
+User=root
+Group=root
+ExecStart=/usr/local/bin/traefik
+EOF
+
+chown root:root /etc/systemd/system/traefik.service
+chmod 644 /etc/systemd/system/traefik.service
+systemctl daemon-reload
+systemctl enable traefik.service
+systemctl start traefik.service
