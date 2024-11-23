@@ -61,9 +61,11 @@ end;
 
 
 INSERT INTO host (host,ram,cpu,disk) VALUES
-('fs1701.pilet.cloud', 128, 32, 6000),
-('fs1702.pilet.cloud', 128, 32, 6000),
-('fs1703.pilet.cloud', 128, 32, 6000);
+('fs1701.pilet.site', 128, 32, 6000),
+('fs1702.pilet.site', 128, 32, 6000),
+('fs1703.pilet.site', 128, 32, 6000);
 
 
 EOF
+
+dns_save_zones_db
