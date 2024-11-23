@@ -13,7 +13,7 @@ with lxc install k3-master --name $NAME
 IPV4=$(store_get_vm_addr4 $NAME)
 dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
 
-cat <<EOF > /root/.config/services/${NAME}.yaml
+cat <<EOF > /etc/traefik/services/${NAME}.yaml
 http:
   routers:
     route-$NAME:
