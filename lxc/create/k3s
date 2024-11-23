@@ -1,21 +1,14 @@
 #!/bin/bash
 
-#> [name]=some
+#> [name]=? [profile]=lg
 
-with lxc create vm --name $NAME --profile md
+with lxc create vm --name $NAME --profile $PROFILE
 if [ $? -ne 0 ]; then
   echo "Failed creating container $NAME"
   exit 1
 fi
 
-cat <<EOF | lxc shell $NAME
-git clone https://github.com/pilet-io/vm-cli.git
-mv /root/vm-cli /root/cli
-echo "export PATH=\$PATH:/root/cli" >> /root/.profile
-/root/cli/with k8s create cluster
-EOF
-
-echo "Kubernetes master $NAME is created"
+with lxc install k3-master --name $NAME
 
 IPV4=$(store_get_vm_addr4 $NAME)
 dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME

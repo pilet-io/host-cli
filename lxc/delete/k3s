@@ -3,6 +3,5 @@
 #> [name]=some
 
 with lxc delete vm --name $NAME
-
 dns_delete_record $NAME pilet.site
 rm /root/.config/services/${NAME}.yaml
