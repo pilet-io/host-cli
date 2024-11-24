@@ -8,7 +8,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-with lxc install k3-master --name $NAME
+with lxc install k3s-master --name $NAME
 
 IPV4=$(store_get_vm_addr4 $NAME)
 dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
