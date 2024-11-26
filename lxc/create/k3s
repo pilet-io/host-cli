@@ -34,3 +34,23 @@ http:
           - url: "http://${IPV4}:80"
 EOF
 
+cat <<EOF > /etc/traefik/services/${NAME}-6443.yaml
+tcp:
+  routers:
+    route-$NAME-k8s:
+      rule: "HostSNI(\`${NAME}.pilet.site\`)"
+      tls:
+        passthrough: true
+      service: service-$NAME-k8s
+      priority: 1000
+      entryPoints:
+        - k8s
+
+  services:
+    service-$NAME-k8s:
+      loadBalancer:
+        servers:
+          - address: "${IPV4}:6443"
+EOF
+
+

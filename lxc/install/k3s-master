@@ -2,7 +2,7 @@
 
 #> [name]=sys-main
 
-lxc exec $NAME -- /root/cli/scripts/k3s-install.sh
+lxc exec $NAME -- bash -c "INSTALL_K3S_EXEC='server --tls-san ${NAME}.pilet.site' /root/cli/scripts/k3s-install.sh"
 
 TOKEN=$(lxc exec $NAME -- cat /var/lib/rancher/k3s/server/token)
 IP4=$(store_get_vm_addr4 $NAME)
