@@ -5,3 +5,4 @@
 with lxc delete vm --name $NAME
 dns_delete_record $NAME pilet.site
 rm /etc/traefik/services/${NAME}.yaml
+rm /etc/traefik/services/${NAME}-6443.yaml
