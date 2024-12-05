@@ -22,14 +22,14 @@ lxc start $NAME
 while true; do
   sleep 2s
   IPV6=$(lxc exec $NAME ip addr 2>/dev/null | grep 2a01 | awk '{print $2}')
-#    IPV4=$(lxc exec $NAME ip addr 2>/dev/null | grep 'inet 10' | awk '{print $2}')
+  IPV4=$(lxc exec $NAME ip addr 2>/dev/null | grep 'inet 10' | awk '{print $2}')
   echo -n "."
   IPV6=${IPV6/\/64/}
-#    IPV4=${IPV4/\/24/}
+  IPV4=${IPV4/\/24/}
   if [ ! -z "$IPV6" ]; then
     echo ""
     echo "IP is $IPV6"
-    store_vm_add_ip $NAME 127.0.0.1 $IPV6 > /dev/null
+    store_vm_add_ip $NAME $IPV4 $IPV6 > /dev/null
     break
   fi
 done
