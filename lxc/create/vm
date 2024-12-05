@@ -19,38 +19,20 @@ lxc init ubuntu:24.04 $NAME --vm $OPTIONS
 store_vm_add $NAME $PROFILE
 lxc start $NAME
 
-if [[ $PROFILE =~ "vlan" ]]; then
-  while true; do
-    sleep 2s
-    IPV6=$(lxc exec $NAME ip addr 2>/dev/null | grep 2a01 | awk '{print $2}')
-    IPV4=$(lxc exec $NAME ip addr 2>/dev/null | grep 192. | awk '{print $2}')
-    echo -n "."
-    IPV6=${IPV6/\/64/}
-    IPV4=${IPV4/\/16/}
-    if [ ! -z "$IPV6" ] && [ ! -z "$IPV4" ]; then
-      echo ""
-      echo "IPs are $IPV4, $IPV6"
-      store_vm_add_ip $NAME $IPV4 $IPV6 > /dev/null
-      break
-    fi
-  done
-  sleep 5s
-else
-  while true; do
-    sleep 2s
-    IPV6=$(lxc exec $NAME ip addr 2>/dev/null | grep 2a01 | awk '{print $2}')
-    IPV4=$(lxc exec $NAME ip addr 2>/dev/null | grep 'inet 10' | awk '{print $2}')
-    echo -n "."
-    IPV6=${IPV6/\/64/}
-    IPV4=${IPV4/\/24/}
-    if [ ! -z "$IPV6" ] && [ ! -z "$IPV4" ]; then
-      echo ""
-      echo "IPs are $IPV4, $IPV6"
-      store_vm_add_ip $NAME $IPV4 $IPV6 > /dev/null
-      break
-    fi
-  done
-fi
+while true; do
+  sleep 2s
+  IPV6=$(lxc exec $NAME ip addr 2>/dev/null | grep 2a01 | awk '{print $2}')
+#    IPV4=$(lxc exec $NAME ip addr 2>/dev/null | grep 'inet 10' | awk '{print $2}')
+  echo -n "."
+  IPV6=${IPV6/\/64/}
+#    IPV4=${IPV4/\/24/}
+  if [ ! -z "$IPV6" ]; then
+    echo ""
+    echo "IP is $IPV6"
+    store_vm_add_ip $NAME 127.0.0.1 $IPV6 > /dev/null
+    break
+  fi
+done
 
 while true; do
   DONE=$(lxc exec $NAME -- cat /root/.done 2>/dev/null)
