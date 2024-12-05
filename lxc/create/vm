@@ -28,7 +28,7 @@ while true; do
   IPV4=${IPV4/\/24/}
   if [ ! -z "$IPV6" ]; then
     echo ""
-    echo "IP is $IPV6"
+    echo "IPs are $IPV4, $IPV6"
     store_vm_add_ip $NAME $IPV4 $IPV6 > /dev/null
     break
   fi
