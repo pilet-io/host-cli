@@ -11,7 +11,6 @@ fi
 with lxc install k3s-master --name $NAME
 
 IP6=$(store_get_vm_addr6 $NAME)
-dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
 
 cat <<EOF > /etc/traefik/services/${NAME}.yaml
 http:
@@ -53,4 +52,4 @@ tcp:
           - address: "[$IP6]:6443"
 EOF
 
-
+dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
