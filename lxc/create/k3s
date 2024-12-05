@@ -10,7 +10,7 @@ fi
 
 with lxc install k3s-master --name $NAME
 
-IPV4=$(store_get_vm_addr4 $NAME)
+IP6=$(store_get_vm_addr6 $NAME)
 dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
 
 cat <<EOF > /etc/traefik/services/${NAME}.yaml
@@ -31,7 +31,7 @@ http:
     service-$NAME:
       loadBalancer:
         servers:
-          - url: "http://${IPV4}:80"
+          - url: "http://[$IPV6]:80"
 EOF
 
 cat <<EOF > /etc/traefik/services/${NAME}-6443.yaml
@@ -50,7 +50,7 @@ tcp:
     service-$NAME-k8s:
       loadBalancer:
         servers:
-          - address: "${IPV4}:6443"
+          - address: "[$IPV6]:6443"
 EOF
 
 
