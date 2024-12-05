@@ -31,7 +31,7 @@ http:
     service-$NAME:
       loadBalancer:
         servers:
-          - url: "http://[$IPV6]:80"
+          - url: "http://[$IP6]:80"
 EOF
 
 cat <<EOF > /etc/traefik/services/${NAME}-6443.yaml
@@ -50,7 +50,7 @@ tcp:
     service-$NAME-k8s:
       loadBalancer:
         servers:
-          - address: "[$IPV6]:6443"
+          - address: "[$IP6]:6443"
 EOF
 
 
