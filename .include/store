@@ -1,12 +1,18 @@
 #!/bin/bash
 
+# ID
+function store_post() {
+  curl -H "Content-Type: application/json" -X POST --data-binary @- https://main.pilet.site/v1/store/json/$1
+}
+
+
 # NAME PROFILE IP4 IP6
 function store_save_vm() {
   NAME=$1
   PROFILE=$2
   IP4=$3
   IP6=$4
-  cat <<-EOF | curl -H "Content-Type: application/json" -X POST --data-binary @- https://main.pilet.site/v1/store/json/infra/hosts/$SYS_HOSTNAME/vms/$NAME
+  cat <<-EOF | store_post infra/hosts/$SYS_HOSTNAME/vms/$NAME
       {
         "profile": "$PROFILE",
         "ip4": "$IP4",

@@ -13,10 +13,7 @@ for profile in ${PROFILE/,/ }; do
   OPTIONS="$OPTIONS --profile $profile"
 done
 
-store_vm_remove $NAME > /dev/null
-
 lxc init ubuntu:24.04 $NAME --vm $OPTIONS
-store_vm_add $NAME $PROFILE
 lxc start $NAME
 
 while true; do
@@ -29,7 +26,6 @@ while true; do
   if [ ! -z "$IPV6" ]; then
     echo ""
     echo "IPs are $IPV4, $IPV6"
-    store_vm_add_ip $NAME $IPV4 $IPV6 > /dev/null
     store_save_vm $NAME $PROFILE $IPV4 $IPV6
     break
   fi
