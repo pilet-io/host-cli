@@ -30,7 +30,7 @@ while true; do
     echo ""
     echo "IPs are $IPV4, $IPV6"
     store_vm_add_ip $NAME $IPV4 $IPV6 > /dev/null
-    store_save_vm $NAME $IPV4 $IPV6
+    store_save_vm $NAME $PROFILE $IPV4 $IPV6
     break
   fi
 done
