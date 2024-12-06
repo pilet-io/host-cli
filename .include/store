@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# NAME PROFILE IP4 IP6
+function store_save_vm() {
+  NAME=$1
+  PROFILE=$2
+  IP4=$3
+  IP6=$4
+  cat <<-EOF | curl -H "Content-Type: application/json" -X POST --data-binary @- https://main.pilet.site/v1/store/json/infra/hosts/$SYS_HOSTNAME/vms/$NAME
+      {
+        "profile": "$PROFILE",
+        "ip4": "$IP4",
+        "ip6": "$IP6"
+      }
+EOF
+}
+
 function store_sys() {
   psql -U pilet -h pg.pilet.site -d system
 }
@@ -51,4 +66,6 @@ function store_kv_set() {
 function store_kv_get() {
   KEY=$1
   echo "SELECT value FROM system.kv WHERE id = '$KEY'" | store_sys_csv
+}
+}
 }
