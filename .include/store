@@ -67,5 +67,4 @@ function store_kv_get() {
   KEY=$1
   echo "SELECT value FROM system.kv WHERE id = '$KEY'" | store_sys_csv
 }
-}
-}
+
