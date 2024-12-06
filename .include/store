@@ -5,6 +5,10 @@ function store_post() {
   curl -H "Content-Type: application/json" -X POST --data-binary @- https://main.pilet.site/v1/store/json/$1
 }
 
+# ID
+function store_delete() {
+  curl -X DELETE https://main.pilet.site/v1/store/json/$1
+}
 
 # NAME PROFILE IP4 IP6
 function store_save_vm() {
@@ -20,6 +24,14 @@ function store_save_vm() {
       }
 EOF
 }
+
+# NAME
+function store_delete_vm() {
+  NAME=$1
+  store_delete infra/hosts/$SYS_HOSTNAME/vms/$NAME
+}
+
+
 
 function store_sys() {
   psql -U pilet -h pg.pilet.site -d system

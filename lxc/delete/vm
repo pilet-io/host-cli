@@ -6,7 +6,7 @@ lxc config show $NAME > /dev/null 2>&1
 if [ $? -eq 0 ]; then
   lxc stop $NAME
   lxc delete $NAME
-  store_vm_remove $NAME > /dev/null
+  store_delete_vm $NAME
   echo "Container $NAME was removed"
 else
   echo "Container $NAME not found"
