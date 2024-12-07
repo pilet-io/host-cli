@@ -32,30 +32,6 @@ function store_delete_vm() {
 }
 
 
-
-function store_sys() {
-  psql -U pilet -h pg.pilet.site -d system
-}
-
-function store_sys_csv() {
-  psql -U pilet -h pg.pilet.site -d system --csv -t
-}
-
-# store_vm_add NAME PROFILE
-function store_vm_add() {
-  echo "SELECT system.add_vm('$SYS_HOSTNAME','$1','$2')" | store_sys_csv
-}
-
-# store_vm_add_ip NAME IPv4 IPv6
-function store_vm_add_ip() {
-  echo "UPDATE system.vm SET ipv4='$2',ipv6='$3' WHERE host='$SYS_HOSTNAME' AND name='$1'" | store_sys_csv
-}
-
-# store_vm_remove NAME
-function store_vm_remove() {
-  echo "SELECT system.remove_vm('$SYS_HOSTNAME','$1')" | store_sys
-}
-
 # store_get_vm_addr4 NAME
 function store_get_vm_addr4() {
   echo "SELECT ipv4 FROM system.vm WHERE \

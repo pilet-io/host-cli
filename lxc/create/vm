@@ -27,6 +27,7 @@ while true; do
     echo ""
     echo "IPs are $IPV4, $IPV6"
     store_save_vm $NAME $PROFILE $IPV4 $IPV6
+    echo ""
     break
   fi
 done
