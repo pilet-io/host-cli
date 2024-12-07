@@ -6,9 +6,20 @@ function store_post() {
 }
 
 # ID
+function store_yaml_post() {
+  curl -H "Content-Type: application/yaml" -X POST --data-binary @- https://main.pilet.site/v1/store/yaml/$1
+}
+
+# ID
 function store_get() {
   curl https://main.pilet.site/v1/store/json/$1
 }
+
+# ID
+function store_yaml_get() {
+  curl https://main.pilet.site/v1/store/yaml/$1
+}
+
 
 # ID
 function store_delete() {

@@ -8,9 +8,15 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-with lxc install k3s-master --name $NAME
 
 IP6=$(store_get_vm_addr6 $NAME)
+lxc exec $NAME -- bash -c "INSTALL_K3S_EXEC='server --tls-san ${NAME}.pilet.site --flannel-ipv6-masq --cluster-cidr 10.42.0.0/16,2001:cafe:42:0::/56 --service-cidr 10.43.0.0/16,2001:cafe:43:1::/112' /root/cli/scripts/k3s-install.sh"
+
+#TOKEN=$(lxc exec $NAME -- cat /var/lib/rancher/k3s/server/token)
+KUBECFG=$(lxc exec $NAME -- cat /etc/rancher/k3s/k3s.yaml)
+KUBECFG=${KUBECFG/127.0.0.1/$NAME.pilet.site}
+
+echo "$KUBECFG" | store_yaml_post infra/hosts/$SYS_HOSTNAME/vms/$NAME/kube/config
 
 cat <<EOF > /etc/traefik/services/${NAME}.yaml
 http:
