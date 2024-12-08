@@ -2,4 +2,6 @@
 
 #>
 
-dns_save_zones_db
+#dns_save_zones_db
+
+dns_save_zone_db 1234567890 pilet.cloud
