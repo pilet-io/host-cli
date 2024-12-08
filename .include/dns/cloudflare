@@ -11,12 +11,13 @@ function dns_list_zones() {
 
 
 function dns_save_zone_db() {
-  echo '{"zone","$2"}' | store_post infra/zones/$1
+  echo "{\"zone\",\"$1\"}" | store_post infra/zones/$2
 }
 
 function dns_save_zones_db() {
     output=$(dns_list_zones)
     while IFS= read -r line; do
+      echo "$line"
       dns_save_zone_db $line
     done <<< "$output"
 }
