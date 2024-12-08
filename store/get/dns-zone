@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#> [zone]=pilet.cloud
+
+dns_zone_id $ZONE
