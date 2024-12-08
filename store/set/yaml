@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#> [key]=?
+
+store_yaml_post $KEY
