@@ -1,5 +1,5 @@
 #!/bin/bash
 
-#> [key]=? [value]=?
+#> [key]=?
 
-store_kv_set $KEY $VALUE
+store_post $KEY

@@ -2,28 +2,28 @@
 
 # ID
 function store_post() {
-  curl -H "Content-Type: application/json" -X POST --data-binary @- https://main.pilet.site/v1/store/json/$1
+  curl -s -H "Content-Type: application/json" -X POST --data-binary @- https://main.pilet.site/v1/store/json/$1
 }
 
 # ID
 function store_yaml_post() {
-  curl -H "Content-Type: application/yaml" -X POST --data-binary @- https://main.pilet.site/v1/store/yaml/$1
+  curl -s -H "Content-Type: application/yaml" -X POST --data-binary @- https://main.pilet.site/v1/store/yaml/$1
 }
 
 # ID
 function store_get() {
-  curl https://main.pilet.site/v1/store/json/$1
+  curl -s https://main.pilet.site/v1/store/json/$1
 }
 
 # ID
 function store_yaml_get() {
-  curl https://main.pilet.site/v1/store/yaml/$1
+  curl -s https://main.pilet.site/v1/store/yaml/$1
 }
 
 
 # ID
 function store_delete() {
-  curl -X DELETE https://main.pilet.site/v1/store/json/$1
+  curl -s -X DELETE https://main.pilet.site/v1/store/json/$1
 }
 
 # NAME PROFILE IP4 IP6

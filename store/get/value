@@ -2,4 +2,4 @@
 
 #> [key]=?
 
-store_kv_get $KEY
+store_get $KEY | jq

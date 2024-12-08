@@ -1,8 +1,0 @@
-#!/bin/bash
-
-#> [name]=sys-main
-
-for host in fs1701 fs1702 fs1703; do
- HOST=$host.pilet.cloud
- ssh -t root@$HOST bash -l -c "'with lxc delete vm --name $NAME'"
-done
