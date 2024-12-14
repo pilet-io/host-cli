@@ -29,7 +29,6 @@ usage() {
 }
 
 eval "declare -A VAR=($(cat $SNIP_FILE | grep '#> ' | cut -c 4-))"
-echo "Running $SNIP_FILE"
 
 LONG="help"
 for key in ${!VAR[@]}; do
@@ -76,6 +75,7 @@ for key in ${!VAR[@]}; do
   KNOWN_VARS="$KNOWN_VARS \$$VNAME"
 done
 
+echo "Running $SNIP_FILE"
 # check required parameters
 
 if [[ ! -z "$_PARAM" ]]; then
