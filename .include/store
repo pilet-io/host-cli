@@ -26,15 +26,18 @@ function store_delete() {
   curl -s -X DELETE https://main.pilet.site/v1/store/json/$1
 }
 
-# NAME PROFILE IP4 IP6
+# NAME PROFILE DNS IP4 IP6
 function store_save_vm() {
   NAME=$1
   PROFILE=$2
-  IP4=$3
-  IP6=$4
-  cat <<-EOF | store_post infra/hosts/$SYS_HOSTNAME/vms/$NAME
+  DNS=$3
+  IP4=$4
+  IP6=$5
+  cat <<-EOF | store_post infra/vms/$NAME
       {
+        "host": "$SYS_HOSTNAME",
         "profile": "$PROFILE",
+        "dns": "$DNS",
         "ip4": "$IP4",
         "ip6": "$IP6"
       }
@@ -44,19 +47,19 @@ EOF
 # NAME
 function store_delete_vm() {
   NAME=$1
-  store_delete infra/hosts/$SYS_HOSTNAME/vms/$NAME
+  store_delete infra/vms/$NAME
 }
 
 
 # store_get_vm_addr4 NAME
 function store_get_vm_addr4() {
   NAME=$1
-  store_get infra/hosts/$SYS_HOSTNAME/vms/$NAME | jq -r .ip4
+  store_get infra/vms/$NAME | jq -r .ip4
 }
 
 # store_get_vm_addr6 NAME
 function store_get_vm_addr6() {
   NAME=$1
-  store_get infra/hosts/$SYS_HOSTNAME/vms/$NAME | jq -r .ip6
+  store_get infra/vms/$NAME | jq -r .ip6
 }
 
