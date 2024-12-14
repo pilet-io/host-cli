@@ -92,17 +92,10 @@ if [[ ! -z "$_PARAM" ]]; then
   fi
 fi
 
-if [ "$WITH_TRACE" = "yes" ]; then
-  export SPAN_ID=$(openssl rand -hex 16)
-  span_start "$WITH_COMMAND" VAR
-fi
 
 EXEC_FILE="/tmp/$(uuid)"
 echo "Using $EXEC_FILE, Known $KNOWN_VARS"
-# | sed 's|#!/bin/bash|source ~/cli/.include/all|g'
 
 envsubst "$KNOWN_VARS" < $SNIP_FILE > $EXEC_FILE
+sed -i 's|#!/bin/bash|#!/bin/bash\nsource ~/cli/.include/all|g' $EXEC_FILE
 
-if [ "$WITH_TRACE" = "yes" ]; then
-  span_end
-fi
