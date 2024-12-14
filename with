@@ -1,11 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 usage() {
   echo "Usage: with [scope] [action] [subject]"
   exit 1
 }
 
-source ~/cli/.include/all
+source /root/cli/.include/all
 
 WITH_SCOPE=${1}
 WITH_COMMAND="with.${1}.${2}.${3}"
@@ -29,6 +29,7 @@ usage() {
 }
 
 eval "declare -A VAR=($(cat $SNIP_FILE | grep '#> ' | cut -c 4-))"
+echo "Running $SNIP_FILE"
 
 LONG="help"
 for key in ${!VAR[@]}; do
@@ -96,7 +97,7 @@ fi
 EXEC_FILE="/tmp/$(uuid)"
 
 envsubst "$KNOWN_VARS" < $SNIP_FILE > $EXEC_FILE
-sed -i 's|#!/bin/bash|#!/bin/bash\nsource ~/cli/.include/all|g' $EXEC_FILE
+sed -i 's|#!/bin/bash|#!/bin/bash\nsource /root/cli/.include/all|g' $EXEC_FILE
 chmod +x $EXEC_FILE
 $EXEC_FILE
 rm $EXEC_FILE
