@@ -72,7 +72,7 @@ KNOWN_VARS=""
 for key in ${!VAR[@]}; do
   VNAME=$(echo "${key^^}" | tr '-' '_')
   eval "export $VNAME='''${VAR[$key]}'''"
-  KNOWN_VARS="$KNOWN_VARS $VNAME"
+  KNOWN_VARS="$KNOWN_VARS \$$VNAME"
 done
 
 # check required parameters
@@ -99,8 +99,9 @@ fi
 
 EXEC_FILE="/tmp/$(uuid)"
 echo "Using $EXEC_FILE, Known $KNOWN_VARS"
+# | sed 's|#!/bin/bash|source ~/cli/.include/all|g'
 
-cat $SNIP_FILE | envsubst "$KNOWN_VARS" | sed 's|#!/bin/bash|source ~/cli/.include/all|g' > $EXEC_FILE
+envsubst "$KNOWN_VARS" < $SNIP_FILE > $EXEC_FILE
 
 if [ "$WITH_TRACE" = "yes" ]; then
   span_end
