@@ -75,7 +75,6 @@ for key in ${!VAR[@]}; do
   KNOWN_VARS="$KNOWN_VARS \$$VNAME"
 done
 
-echo "Running $SNIP_FILE"
 # check required parameters
 
 if [[ ! -z "$_PARAM" ]]; then
@@ -95,6 +94,7 @@ fi
 
 
 EXEC_FILE="/tmp/$(uuid)"
+echo "Using $EXEC_FILE"
 
 envsubst "$KNOWN_VARS" < $SNIP_FILE > $EXEC_FILE
 sed -i 's|#!/bin/bash|#!/bin/bash\nsource /root/cli/.include/all|g' $EXEC_FILE
