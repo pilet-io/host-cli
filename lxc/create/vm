@@ -13,7 +13,7 @@ for profile in ${PROFILE/,/ }; do
   OPTIONS="$OPTIONS --profile $profile"
 done
 
-echo "Running lxc init"
+echo "Running lxc init ubuntu:24.04 $NAME --vm $OPTIONS"
 lxc init ubuntu:24.04 $NAME --vm $OPTIONS
 echo "Running lxc start"
 lxc start $NAME

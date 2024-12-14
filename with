@@ -100,5 +100,5 @@ envsubst "$KNOWN_VARS" < $SNIP_FILE > $EXEC_FILE
 sed -i 's|#!/bin/bash|#!/bin/bash\nsource /root/cli/.include/all|g' $EXEC_FILE
 chmod +x $EXEC_FILE
 $EXEC_FILE
-rm $EXEC_FILE
+#rm $EXEC_FILE
 
