@@ -13,10 +13,13 @@ for profile in ${PROFILE/,/ }; do
   OPTIONS="$OPTIONS --profile $profile"
 done
 
+echo "Running lxc init"
 lxc init ubuntu:24.04 $NAME --vm $OPTIONS
+echo "Running lxc start"
 lxc start $NAME
 
 while true; do
+  echo "Waiting 2s"
   sleep 2s
   IPV6=$(lxc exec $NAME ip addr 2>/dev/null | grep 2a01 | awk '{print $2}')
   IPV4=$(lxc exec $NAME ip addr 2>/dev/null | grep 'inet 10' | awk '{print $2}')
