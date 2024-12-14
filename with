@@ -98,7 +98,7 @@ if [ "$WITH_TRACE" = "yes" ]; then
 fi
 
 EXEC_FILE="/tmp/$(uuid)"
-echo "Using $EXEC_FILE"
+echo "Using $EXEC_FILE, Known $KNOWN_VARS"
 
 cat $SNIP_FILE | envsubst "$KNOWN_VARS" | sed 's|#!/bin/bash|source ~/cli/.include/all|g' > $EXEC_FILE
 
