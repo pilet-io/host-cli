@@ -3,3 +3,6 @@
 #> [name]=hey
 
 echo "Name is $NAME"
+echo "#> name=$NAME"
+echo "#> param=5"
+echo "Done"
