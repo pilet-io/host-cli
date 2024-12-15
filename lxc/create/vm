@@ -26,7 +26,13 @@ while true; do
   if [ ! -z "$IPV6" ]; then
     echo ""
     echo "IPs are $IPV4, $IPV6"
-    store_save_vm $NAME $PROFILE $NAME.pilet.site $IPV4 $IPV6
+    store_save_vm $NAME $PROFILE $NAME.pilet.site $IPV4 $IPV6 > /dev/null
+    echo "#> host=$(hostname)"
+    echo "#> name=$NAME"
+    echo "#> profile=$PROFILE"
+    echo "#> dns=$NAME.pilet.site"
+    echo "#> ip4=$IPV4"
+    echo "#> ip6=$IPV6"
     echo ""
     break
   fi
