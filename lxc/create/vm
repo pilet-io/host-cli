@@ -28,7 +28,7 @@ while true; do
     echo "IPs are $IPV4, $IPV6"
     store_save_vm $NAME $PROFILE $NAME.pilet.site $IPV4 $IPV6 > /dev/null
     echo "#> host=$(hostname)"
-    echo "#> name=$NAME"
+    echo "#> vm=$NAME"
     echo "#> profile=$PROFILE"
     echo "#> dns=$NAME.pilet.site"
     echo "#> ip4=$IPV4"
