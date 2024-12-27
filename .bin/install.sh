@@ -8,7 +8,7 @@ fi
 hostnamectl set-hostname $SYS_HOSTNAME
 
 apt update
-apt install -y apt-transport-https ca-certificates curl sqlite3 software-properties-common jq snapd zfsutils-linux
+apt install -y apt-transport-https ca-certificates curl sqlite3 software-properties-common jq snapd zfsutils-linux uuid
 snap install yq
 snap install lxd
 
