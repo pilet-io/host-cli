@@ -41,4 +41,10 @@ sed -i '/export PATH=\$PATH:\/root\/cli:\/root\/cli\/.bin/d' /root/.profile
 echo "export PATH=\$PATH:/root/cli:/root/cli/.bin" >> /root/.profile
 
 source /root/.profile
+cat /root/cli/.bin/encrypted/hetz_id.encr | decr > /root/.ssh/id_rsa
+cat /root/cli/.bin/encrypted/hetz_id.pub.encr | decr > /root/.ssh/id_rsa.pub
+cat /root/cli/.bin/encrypted/hetz_id.pub.encr | decr > /root/.ssh/authorized_keys
+chmod 400 /root/.ssh/id_rsa
+chmod 400 /root/.ssh/id_rsa.pub
+chmod 600 /root/.ssh/authorized_keys
 with host configure with-completion
