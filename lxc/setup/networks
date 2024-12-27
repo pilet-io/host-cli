@@ -1,14 +1,18 @@
 #!/bin/bash
 
-#> [subnet]=2
+#>
 
-lxc network create br1 --type bridge
-cat <<EOF | lxc network edit br1
-name: br1
-description: "Vlan based"
+IP6=$(ip addr | grep 2a01: | grep /128 | awk '{print $2}')
+IP6="${IP6/\/128/\/64}"
+
+echo "ip6 : ${IP6}"
+#lxc network create br0 --type bridge
+cat <<EOF #| lxc network edit br0
+name: br0
+description: "Br0 default"
 config:
-  bridge.external_interfaces: vlan4004
-  ipv4.address: 192.168.$SUBNET.1/16
-  ipv4.dhcp: "true"
-  ipv4.dhcp.ranges: 192.168.$SUBNET.10-192.168.$SUBNET.100
+  ipv4.address: 10.224.181.1/24
+  ipv4.nat: "true"
+  ipv6.address: 2a01:4f8:261:52da::2/64
+  ipv6.nat: "true"
 EOF
