@@ -3,7 +3,7 @@
 #>
 
 IP6=$(ip addr | grep 2a01: | grep /128 | awk '{print $2}')
-IP6="${IP6/\/128/\/64}"
+IP6="${IP6/\/128/}"
 
 echo "ip6 : ${IP6}"
 lxc network create br0 --type bridge
