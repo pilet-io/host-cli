@@ -67,8 +67,17 @@ function vm_save_uno_profile() {
 config:
   limits.cpu: "${CPU}"
   limits.memory: ${RAM}GB
+  cloud-init.network-config: |
+    version: 2
+    ethernets:
+      enp5s0:
+        dhcp4: true
 description: ${NAME} size profile
 devices:
+  enp5s0:
+    name: enp5s0
+    network: lxdbr0
+    type: nic
   root:
     path: /
     pool: default
