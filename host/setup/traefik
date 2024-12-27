@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#>
+
+mkdir -p /etc/traefik/services
+cat <<EOF > /etc/traefik/traefik.yaml
+## Static configuration
+entryPoints:
+  http:
+    address: ":80"
+  https:
+    address: ":443"
+  k8s:
+    address: ":6443"
+
+certificatesResolvers:
+  resolver0:
+    acme:
+      email: "potapov@yahoo.com"
+      storage: /etc/traefik/acme.json
+      dnsChallenge:
+        provider: cloudflare
+        delayBeforeCheck: 0
+
+providers:
+  file:
+    directory: /etc/traefik/services
+    watch: true
+EOF
