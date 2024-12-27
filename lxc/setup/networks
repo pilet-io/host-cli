@@ -11,7 +11,7 @@ cat <<EOF | lxc network edit br0
 name: br0
 description: "Br0 default"
 config:
-  ipv4.address: 172.18.0.1/16
+  ipv4.address: 192.168.100.1/24
   ipv4.nat: "true"
   ipv6.address: ${IP6}/64
   ipv6.nat: "true"
