@@ -27,3 +27,9 @@ providers:
     directory: /etc/traefik/services
     watch: true
 EOF
+
+FILENAME=traefik_v3.2.3_linux_$(dpkg --print-architecture).tar.gz
+wget https://github.com/traefik/traefik/releases/download/v3.2.3/$FILENAME
+tar xzvf $FILENAME -C /tmp
+mv /tmp/traefik /usr/local/bin
+rm $FILENAME
