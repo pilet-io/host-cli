@@ -5,8 +5,11 @@ function store_command() {
 }
 
 function store_setup() {
-    store_command "CREATE TABLE vm(name TEXT PRIMARY KEY, profile TEXT, dns TEXT, ip4 TEXT, ip6 TEXT)"
+    store_command "CREATE TABLE IF NOT EXISTS vm(name TEXT PRIMARY KEY, profile TEXT, dns TEXT, ip4 TEXT, ip6 TEXT)"
+    store_command "CREATE TABLE IF NOT EXISTS zone(name TEXT PRIMARY KEY, id TEXT)"
 }
+
+function
 
 # ID
 function store_post() {
