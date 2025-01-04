@@ -7,7 +7,7 @@ tar -zxvf traefik_v3.2.1_linux_amd64.tar.gz
 rm CHANGELOG.md LICENSE.md traefik_v3.2.1_linux_amd64.tar.gz
 mv traefik /usr/local/bin
 
-mkdir -p /etc/trafik/services
+mkdir -p /etc/traefik/services
 cat <<EOF | tee /etc/traefik/traefik.yaml
 ## Static configuration
 entryPoints:
