@@ -9,66 +9,23 @@ function store_setup() {
     store_command "CREATE TABLE IF NOT EXISTS zone(name TEXT PRIMARY KEY, id TEXT)"
 }
 
-# ID
-function store_post() {
-  curl -s -H "Content-Type: application/json" -X POST --data-binary @- https://main.pilet.site/v1/store/json/$1
-}
-
-# ID
-function store_yaml_post() {
-  curl -s -H "Content-Type: application/yaml" -X POST --data-binary @- https://main.pilet.site/v1/store/yaml/$1
-}
-
-# ID
-function store_get() {
-  curl -s https://main.pilet.site/v1/store/json/$1
-}
-
-# ID
-function store_yaml_get() {
-  curl -s https://main.pilet.site/v1/store/yaml/$1
-}
-
-
-# ID
-function store_delete() {
-  curl -s -X DELETE https://main.pilet.site/v1/store/json/$1
-}
-
 # NAME PROFILE DNS IP4 IP6
 function store_save_vm() {
-  NAME=$1
-  PROFILE=$2
-  DNS=$3
-  IP4=$4
-  IP6=$5
-  cat <<-EOF | store_post infra/vms/$NAME
-      {
-        "host": "$SYS_HOSTNAME",
-        "profile": "$PROFILE",
-        "dns": "$DNS",
-        "ip4": "$IP4",
-        "ip6": "$IP6"
-      }
-EOF
+  store_command "INSERT INTO vm(name,profile,dns,ip4,ip6) VALUES('$1','$2','$3','$4','$5')"
 }
 
 # NAME
 function store_delete_vm() {
-  NAME=$1
-  store_delete infra/vms/$NAME
+  store_command "DELETE FROM vm WHERE name='$1'"
 }
 
-
-# store_get_vm_addr4 NAME
+# NAME
 function store_get_vm_addr4() {
-  NAME=$1
-  store_get infra/vms/$NAME | jq -r .ip4
+  store_command "SELECT ip4 FROM vm WHERE name='$1'"
 }
 
-# store_get_vm_addr6 NAME
+# NAME
 function store_get_vm_addr6() {
-  NAME=$1
-  store_get infra/vms/$NAME | jq -r .ip6
+  store_command "SELECT ip6 FROM vm WHERE name='$1'"
 }
 
