@@ -9,8 +9,6 @@ function store_setup() {
     store_command "CREATE TABLE IF NOT EXISTS zone(name TEXT PRIMARY KEY, id TEXT)"
 }
 
-function
-
 # ID
 function store_post() {
   curl -s -H "Content-Type: application/json" -X POST --data-binary @- https://main.pilet.site/v1/store/json/$1
