@@ -2,5 +2,6 @@
 
 #>
 
+rm /root/.db
 store_setup
-dns_list_zones
+dns_save_zones_db

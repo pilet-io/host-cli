@@ -11,7 +11,7 @@ function dns_list_zones() {
 
 
 function dns_save_zone_db() {
-  echo "{\"zone\":\"$1\"}" | store_post infra/zones/$2
+  store_command "INSERT INTO zone(name,id) VALUES('$2','$1')"
 }
 
 function dns_save_zones_db() {
