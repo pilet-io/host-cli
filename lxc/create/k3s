@@ -14,9 +14,9 @@ lxc exec $NAME -- bash -c "INSTALL_K3S_EXEC='server --tls-san ${NAME}.pilet.site
 
 #TOKEN=$(lxc exec $NAME -- cat /var/lib/rancher/k3s/server/token)
 KUBECFG="$(lxc exec $NAME -- cat /etc/rancher/k3s/k3s.yaml)"
-KUBECFG="${KUBECFG/127.0.0.1/$NAME.pilet.site}"
+#KUBECFG="${KUBECFG/127.0.0.1/$NAME.pilet.site}"
 
-echo $KUBECFG
+echo "$KUBECFG"
 
 #echo "$KUBECFG" | store_yaml_post infra/hosts/$SYS_HOSTNAME/vms/$NAME/kube/config
 
