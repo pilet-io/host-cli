@@ -5,7 +5,7 @@
 wget https://github.com/traefik/traefik/releases/download/v3.2.1/traefik_v3.2.1_linux_amd64.tar.gz
 tar -zxvf traefik_v3.2.1_linux_amd64.tar.gz
 rm CHANGELOG.md LICENSE.md traefik_v3.2.1_linux_amd64.tar.gz
-cp traefik /usr/local/bin
+mv traefik /usr/local/bin
 
 mkdir -p /etc/trafik/services
 cat <<EOF | tee /etc/traefik/traefik.yaml
