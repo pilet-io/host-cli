@@ -24,7 +24,7 @@ function dns_save_zones_db() {
 
 
 function dns_zone_id() {
-  store_get infra/zones/$1 | jq -r .zone
+  store_command "SELECT id FROM zone WHERE name='$1'"
 }
 
 function dns_list_records() {
