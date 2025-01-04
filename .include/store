@@ -1,5 +1,13 @@
 #!/bin/bash
 
+function store_command() {
+  sqlite3 /root/.db $1
+}
+
+function store_setup() {
+    store_command "CREATE TABLE vm(name TEXT PRIMARY KEY, profile TEXT, dns TEXT, ip4 TEXT, ip6 TEXT)"
+}
+
 # ID
 function store_post() {
   curl -s -H "Content-Type: application/json" -X POST --data-binary @- https://main.pilet.site/v1/store/json/$1
