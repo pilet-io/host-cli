@@ -8,6 +8,10 @@ vm_save_uno_profile 4 16 560 lg
 vm_save_uno_profile 8 32 1180 xl
 vm_save_uno_profile 16 64 2360 xxl
 
+vm_save_uno_profile 2 6 320 medium
+vm_save_uno_profile 4 12 640 large
+
+
 vm_save_profile_base
 
 
