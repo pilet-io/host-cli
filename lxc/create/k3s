@@ -2,7 +2,7 @@
 
 #> [name]=? [org]=? [profile]=md
 
-VMNAME="$ORG-$NAME"
+VMNAME="$NAME-$ORG"
 
 with lxc create vm --name $NAME --org $ORG --profile $PROFILE
 if [ $? -ne 0 ]; then

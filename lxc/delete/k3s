@@ -2,7 +2,7 @@
 
 #> [name]=? [org]=?
 
-VMNAME="$ORG-$NAME"
+VMNAME="$NAME-$ORG"
 
 with lxc delete vm --name $NAME --org $ORG
 dns_delete_record $VMNAME pilet.site

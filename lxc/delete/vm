@@ -2,7 +2,7 @@
 
 #> [name]=some [org]=?
 
-VMNAME="$ORG-$NAME"
+VMNAME="$NAME-$ORG"
 
 lxc config show $VMNAME > /dev/null 2>&1
 if [ $? -eq 0 ]; then
