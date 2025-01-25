@@ -1,10 +1,12 @@
 #!/bin/bash
 
-#> [name]=some [profile]=md
+#> [name]=some [org]=? [profile]=md
 
-lxc config show $NAME > /dev/null 2>&1
+VMNAME="$ORG-$NAME"
+
+lxc config show $VMNAME > /dev/null 2>&1
 if [ $? -eq 0 ]; then
-  echo "Container $NAME already exists"
+  echo "Container $VMNAME already exists"
   exit 1
 fi
 
@@ -13,24 +15,25 @@ for profile in ${PROFILE/,/ }; do
   OPTIONS="$OPTIONS --profile $profile"
 done
 
-lxc init ubuntu:24.04 $NAME --vm $OPTIONS < <(echo "")
-lxc start $NAME
+lxc init ubuntu:24.04 $VMNAME --vm $OPTIONS < <(echo "")
+lxc start $VMNAME
 
 while true; do
   sleep 2s
-  IPV6=$(lxc exec $NAME ip addr 2>/dev/null | grep 2a01 | awk '{print $2}')
-  IPV4=$(lxc exec $NAME ip addr 2>/dev/null | grep 'inet 192' | awk '{print $2}')
+  IPV6=$(lxc exec $VMNAME ip addr 2>/dev/null | grep 2a01 | awk '{print $2}')
+  IPV4=$(lxc exec $VMNAME ip addr 2>/dev/null | grep 'inet 192' | awk '{print $2}')
   echo -n "."
   IPV6=${IPV6/\/64/}
   IPV4=${IPV4/\/24/}
   if [ ! -z "$IPV6" ]; then
     echo ""
     echo "IPs are $IPV4, $IPV6"
-    store_save_vm $NAME $PROFILE $NAME.pilet.site $IPV4 $IPV6 > /dev/null
+    store_save_vm $VMNAME $PROFILE $VMNAME.pilet.site $IPV4 $IPV6 > /dev/null
     echo "#> host=$(hostname)"
     echo "#> vm=$NAME"
+    echo "#> name=$VMNAME"
     echo "#> profile=$PROFILE"
-    echo "#> dns=$NAME.pilet.site"
+    echo "#> dns=$VMNAME.pilet.site"
     echo "#> ip4=$IPV4"
     echo "#> ip6=$IPV6"
     echo ""
@@ -39,7 +42,7 @@ while true; do
 done
 
 while true; do
-  DONE=$(lxc exec $NAME -- cat /root/.done 2>/dev/null)
+  DONE=$(lxc exec $VMNAME -- cat /root/.done 2>/dev/null)
   if [[ "$DONE" == "done" ]]; then
     echo "Done"
     break

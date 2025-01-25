@@ -4,7 +4,7 @@
 
 VMNAME="$ORG-$NAME"
 
-with lxc delete vm --name $VMNAME
+with lxc delete vm --name $NAME --org $ORG
 dns_delete_record $VMNAME pilet.site
 rm /etc/traefik/services/${VMNAME}.yaml
 rm /etc/traefik/services/${VMNAME}-6443.yaml

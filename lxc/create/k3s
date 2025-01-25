@@ -4,7 +4,7 @@
 
 VMNAME="$ORG-$NAME"
 
-with lxc create vm --name $VMNAME --profile $PROFILE
+with lxc create vm --name $NAME --org $ORG --profile $PROFILE
 if [ $? -ne 0 ]; then
   echo "Failed creating container $VMNAME"
   exit 1
@@ -22,7 +22,7 @@ echo "$KUBECFG" | awk '{print "##>"$0}'
 
 #echo "$KUBECFG" | store_yaml_post infra/hosts/$SYS_HOSTNAME/vms/$VMNAME/kube/config
 
-cat <<EOF > /etc/traefik/services/${NAME}.yaml
+cat <<EOF > /etc/traefik/services/${VMNAME}.yaml
 http:
   routers:
     route-$VMNAME:
@@ -43,7 +43,7 @@ http:
           - url: "http://[$IP6]:80"
 EOF
 
-cat <<EOF > /etc/traefik/services/${NAME}-6443.yaml
+cat <<EOF > /etc/traefik/services/${VMNAME}-6443.yaml
 tcp:
   routers:
     route-$VMNAME-k8s:

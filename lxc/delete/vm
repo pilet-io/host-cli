@@ -1,13 +1,15 @@
 #!/bin/bash
 
-#> [name]=some
+#> [name]=some [org]=?
 
-lxc config show $NAME > /dev/null 2>&1
+VMNAME="$ORG-$NAME"
+
+lxc config show $VMNAME > /dev/null 2>&1
 if [ $? -eq 0 ]; then
-  lxc stop $NAME
-  lxc delete $NAME
-  store_delete_vm $NAME
-  echo "Container $NAME was removed"
+  lxc stop $VMNAME
+  lxc delete $VMNAME
+  store_delete_vm $VMNAME
+  echo "Container $VMNAME was removed"
 else
-  echo "Container $NAME not found"
+  echo "Container $VMNAME not found"
 fi
