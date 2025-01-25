@@ -1,41 +1,43 @@
 #!/bin/bash
 
-#> [name]=? [profile]=lg
+#> [name]=? [org]=? [profile]=md
 
-with lxc create vm --name $NAME --profile $PROFILE
+VMNAME="$ORG-$NAME"
+
+with lxc create vm --name $VMNAME --profile $PROFILE
 if [ $? -ne 0 ]; then
-  echo "Failed creating container $NAME"
+  echo "Failed creating container $VMNAME"
   exit 1
 fi
 
 
-IP6=$(store_get_vm_addr6 $NAME)
-lxc exec $NAME -- bash -c "INSTALL_K3S_EXEC='server --tls-san ${NAME}.pilet.site --flannel-ipv6-masq --cluster-cidr 10.42.0.0/16,2001:cafe:42:0::/56 --service-cidr 10.43.0.0/16,2001:cafe:43:1::/112' /root/cli/scripts/k3s-install.sh"
+IP6=$(store_get_vm_addr6 $VMNAME)
+lxc exec $VMNAME -- bash -c "INSTALL_K3S_EXEC='server --tls-san ${NAME}.pilet.site --flannel-ipv6-masq --cluster-cidr 10.42.0.0/16,2001:cafe:42:0::/56 --service-cidr 10.43.0.0/16,2001:cafe:43:1::/112' /root/cli/scripts/k3s-install.sh"
 
-#TOKEN=$(lxc exec $NAME -- cat /var/lib/rancher/k3s/server/token)
-KUBECFG="$(lxc exec $NAME -- cat /etc/rancher/k3s/k3s.yaml)"
-KUBECFG=${KUBECFG/127.0.0.1/$NAME.pilet.site}
+#TOKEN=$(lxc exec $VMNAME -- cat /var/lib/rancher/k3s/server/token)
+KUBECFG="$(lxc exec $VMNAME -- cat /etc/rancher/k3s/k3s.yaml)"
+KUBECFG=${KUBECFG/127.0.0.1/$VMNAME.pilet.site}
 
 echo "$KUBECFG" | awk '{print "##>"$0}'
 
-#echo "$KUBECFG" | store_yaml_post infra/hosts/$SYS_HOSTNAME/vms/$NAME/kube/config
+#echo "$KUBECFG" | store_yaml_post infra/hosts/$SYS_HOSTNAME/vms/$VMNAME/kube/config
 
 cat <<EOF > /etc/traefik/services/${NAME}.yaml
 http:
   routers:
-    route-$NAME:
+    route-$VMNAME:
       rule: "Host(\`${NAME}.pilet.site\`)"
       tls:
         certResolver: resolver0
         domains:
           - main: "*.pilet.site"
-      service: service-$NAME
+      service: service-$VMNAME
       priority: 1000
       entryPoints:
         - https
 
   services:
-    service-$NAME:
+    service-$VMNAME:
       loadBalancer:
         servers:
           - url: "http://[$IP6]:80"
@@ -44,20 +46,20 @@ EOF
 cat <<EOF > /etc/traefik/services/${NAME}-6443.yaml
 tcp:
   routers:
-    route-$NAME-k8s:
+    route-$VMNAME-k8s:
       rule: "HostSNI(\`${NAME}.pilet.site\`)"
       tls:
         passthrough: true
-      service: service-$NAME-k8s
+      service: service-$VMNAME-k8s
       priority: 1000
       entryPoints:
         - k8s
 
   services:
-    service-$NAME-k8s:
+    service-$VMNAME-k8s:
       loadBalancer:
         servers:
           - address: "[$IP6]:6443"
 EOF
 
-dns_create_record CNAME $NAME pilet.site $SYS_HOSTNAME
+dns_create_record CNAME $VMNAME pilet.site $SYS_HOSTNAME

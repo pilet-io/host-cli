@@ -1,8 +1,10 @@
 #!/bin/bash
 
-#> [name]=some
+#> [name]=? [org]=?
 
-with lxc delete vm --name $NAME
-dns_delete_record $NAME pilet.site
-rm /etc/traefik/services/${NAME}.yaml
-rm /etc/traefik/services/${NAME}-6443.yaml
+VMNAME="$ORG-$NAME"
+
+with lxc delete vm --name $VMNAME
+dns_delete_record $VMNAME pilet.site
+rm /etc/traefik/services/${VMNAME}.yaml
+rm /etc/traefik/services/${VMNAME}-6443.yaml
