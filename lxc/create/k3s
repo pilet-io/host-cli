@@ -12,11 +12,11 @@ fi
 
 
 IP6=$(store_get_vm_addr6 $VMNAME)
-lxc exec $VMNAME -- bash -c "INSTALL_K3S_EXEC='server --tls-san ${NAME}.pilet.site --flannel-ipv6-masq --cluster-cidr 10.42.0.0/16,2001:cafe:42:0::/56 --service-cidr 10.43.0.0/16,2001:cafe:43:1::/112' /root/cli/scripts/k3s-install.sh"
+lxc exec $VMNAME -- bash -c "INSTALL_K3S_EXEC='server --tls-san ${NAME}.kubea.cloud --flannel-ipv6-masq --cluster-cidr 10.42.0.0/16,2001:cafe:42:0::/56 --service-cidr 10.43.0.0/16,2001:cafe:43:1::/112' /root/cli/scripts/k3s-install.sh"
 
 #TOKEN=$(lxc exec $VMNAME -- cat /var/lib/rancher/k3s/server/token)
 KUBECFG="$(lxc exec $VMNAME -- cat /etc/rancher/k3s/k3s.yaml)"
-KUBECFG=${KUBECFG/127.0.0.1/$VMNAME.pilet.site}
+KUBECFG=${KUBECFG/127.0.0.1/$VMNAME.kubea.cloud}
 
 echo "$KUBECFG" | awk '{print "##>"$0}'
 
@@ -26,11 +26,11 @@ cat <<EOF > /etc/traefik/services/${VMNAME}.yaml
 http:
   routers:
     route-$VMNAME:
-      rule: "Host(\`${NAME}.pilet.site\`)"
+      rule: "Host(\`${NAME}.kubea.cloud\`)"
       tls:
         certResolver: resolver0
         domains:
-          - main: "*.pilet.site"
+          - main: "*.kubea.cloud"
       service: service-$VMNAME
       priority: 1000
       entryPoints:
@@ -47,7 +47,7 @@ cat <<EOF > /etc/traefik/services/${VMNAME}-6443.yaml
 tcp:
   routers:
     route-$VMNAME-k8s:
-      rule: "HostSNI(\`${NAME}.pilet.site\`)"
+      rule: "HostSNI(\`${NAME}.kubea.cloud\`)"
       tls:
         passthrough: true
       service: service-$VMNAME-k8s
@@ -62,4 +62,4 @@ tcp:
           - address: "[$IP6]:6443"
 EOF
 
-dns_create_record CNAME $VMNAME pilet.site $SYS_HOSTNAME
+dns_create_record CNAME $VMNAME kubea.cloud $SYS_HOSTNAME

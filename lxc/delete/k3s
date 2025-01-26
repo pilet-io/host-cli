@@ -5,6 +5,6 @@
 VMNAME="$NAME-$ORG"
 
 with lxc delete vm --name $NAME --org $ORG
-dns_delete_record $VMNAME pilet.site
+dns_delete_record $VMNAME kubea.cloud
 rm /etc/traefik/services/${VMNAME}.yaml
 rm /etc/traefik/services/${VMNAME}-6443.yaml
