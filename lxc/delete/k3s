@@ -2,7 +2,11 @@
 
 #> [name]=? [org]=?
 
-VMNAME="$NAME-$ORG"
+if [[ "$NAME" == "main" ]]; then
+ VMNAME="$ORG"
+else
+ VMNAME="$NAME-$ORG"
+fi
 
 with lxc delete vm --name $NAME --org $ORG
 dns_delete_record $VMNAME kueb.io

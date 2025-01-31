@@ -2,7 +2,11 @@
 
 #> [name]=? [org]=? [profile]=md
 
-VMNAME="$NAME-$ORG"
+if [[ "$NAME" == "main" ]]; then
+ VMNAME="$ORG"
+else
+ VMNAME="$NAME-$ORG"
+fi
 
 with lxc create vm --name $NAME --org $ORG --profile $PROFILE
 if [ $? -ne 0 ]; then
