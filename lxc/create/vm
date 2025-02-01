@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#> [name]=some [org]=? [profile]=md
+#> [name]=some [org]=? [profile]=medium
 
 VMNAME="$NAME-$ORG"
 
