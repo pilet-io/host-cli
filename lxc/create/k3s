@@ -2,10 +2,11 @@
 
 #> [name]=? [org]=? [profile]=md
 
+VMNAME="$NAME-$ORG"
 if [[ "$NAME" == "main" ]]; then
- VMNAME="$ORG"
+ K3NAME="$ORG"
 else
- VMNAME="$NAME-$ORG"
+ K3NAME="$NAME-$ORG"
 fi
 
 with lxc create vm --name $NAME --org $ORG --profile $PROFILE
@@ -16,51 +17,51 @@ fi
 
 
 IP6=$(store_get_vm_addr6 $VMNAME)
-lxc exec $VMNAME -- bash -c "INSTALL_K3S_EXEC='server --tls-san ${NAME}.kueb.io --flannel-ipv6-masq --cluster-cidr 10.42.0.0/16,2001:cafe:42:0::/56 --service-cidr 10.43.0.0/16,2001:cafe:43:1::/112' /root/cli/scripts/k3s-install.sh"
+lxc exec $VMNAME -- bash -c "INSTALL_K3S_EXEC='server --tls-san ${K3NAME}.kueb.io --flannel-ipv6-masq --cluster-cidr 10.42.0.0/16,2001:cafe:42:0::/56 --service-cidr 10.43.0.0/16,2001:cafe:43:1::/112' /root/cli/scripts/k3s-install.sh"
 
 KUBECFG="$(lxc exec $VMNAME -- cat /etc/rancher/k3s/k3s.yaml)"
-KUBECFG=${KUBECFG/127.0.0.1/$VMNAME.kueb.io}
+KUBECFG=${KUBECFG/127.0.0.1/$K3NAME.kueb.io}
 
 echo "$KUBECFG" | awk '{print "##>"$0}'
 
-cat <<EOF > /etc/traefik/services/${VMNAME}.yaml
+cat <<EOF > /etc/traefik/services/${K3NAME}.yaml
 http:
   routers:
-    route-$VMNAME:
-      rule: "Host(\`${NAME}.kueb.io\`)"
+    route-$K3NAME:
+      rule: "Host(\`${K3NAME}.kueb.io\`)"
       tls:
         certResolver: resolver0
         domains:
           - main: "*.kueb.io"
-      service: service-$VMNAME
+      service: service-$K3NAME
       priority: 1000
       entryPoints:
         - https
 
   services:
-    service-$VMNAME:
+    service-$K3NAME:
       loadBalancer:
         servers:
           - url: "http://[$IP6]:80"
 EOF
 
-cat <<EOF > /etc/traefik/services/${VMNAME}-6443.yaml
+cat <<EOF > /etc/traefik/services/${K3NAME}-6443.yaml
 tcp:
   routers:
-    route-$VMNAME-k8s:
-      rule: "HostSNI(\`${NAME}.kueb.io\`)"
+    route-$K3NAME-k8s:
+      rule: "HostSNI(\`${K3NAME}.kueb.io\`)"
       tls:
         passthrough: true
-      service: service-$VMNAME-k8s
+      service: service-$K3NAME-k8s
       priority: 1000
       entryPoints:
         - k8s
 
   services:
-    service-$VMNAME-k8s:
+    service-$K3NAME-k8s:
       loadBalancer:
         servers:
           - address: "[$IP6]:6443"
 EOF
 
-dns_create_record CNAME $VMNAME kueb.io $SYS_HOSTNAME
+dns_create_record CNAME $K3NAME kueb.io $SYS_HOSTNAME
