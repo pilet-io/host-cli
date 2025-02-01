@@ -3,6 +3,11 @@
 #> [name]=some [org]=? [profile]=medium
 
 VMNAME="$NAME-$ORG"
+if [[ "$NAME" == "main" ]]; then
+ K3NAME="$ORG"
+else
+ K3NAME="$NAME-$ORG"
+fi
 
 lxc config show $VMNAME > /dev/null 2>&1
 if [ $? -eq 0 ]; then
@@ -33,7 +38,7 @@ while true; do
     echo "#> vm=$NAME"
     echo "#> name=$VMNAME"
     echo "#> profile=$PROFILE"
-    echo "#> dns=$VMNAME.kueb.io"
+    echo "#> dns=$K3NAME.kueb.io"
     echo "#> ip4=$IPV4"
     echo "#> ip6=$IPV6"
     echo ""
