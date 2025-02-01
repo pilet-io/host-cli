@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#> [name]=? [org]=? [profile]=md
+#> [name]=? [org]=? [profile]=medium
 
 VMNAME="$NAME-$ORG"
 if [[ "$NAME" == "main" ]]; then
