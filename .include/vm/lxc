@@ -96,6 +96,7 @@ config:
   cloud-init.user-data: |
     #cloud-config
     runcmd:
+      - echo "running init" >> /root/.init
       - /root/cli/with host setup configuration
 description: Basic profile
 EOF
