@@ -97,7 +97,7 @@ config:
     #cloud-config
     runcmd:
       - echo "running init" >> /root/.init
-      - /root/cli/with host setup configuration
+      - sed -i "s|SYS_HOSTNAME|$(hostnamectl hostname)|g" /etc/otelcol-contrib/config.yaml
 description: Basic profile
 EOF
 }
