@@ -98,6 +98,7 @@ config:
     runcmd:
       - echo "running init" >> /root/.init
       - sed -i "s|SYS_HOSTNAME|\$(hostnamectl hostname)|g" /etc/otelcol-contrib/config.yaml
+      - sed -i "s|system.kueb.io|\$(hostnamectl hostname).kueb.io|g" /etc/systemd/system/k3s.service
 description: Basic profile
 EOF
 }
