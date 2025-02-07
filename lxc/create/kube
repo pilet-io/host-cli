@@ -89,3 +89,5 @@ tcp:
 EOF
 
 dns_create_record CNAME $VMNAME kueb.io $SYS_HOSTNAME
+sleep 3s
+lxc exec $VMNAME -- kubectl delete node kube-medium
