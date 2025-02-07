@@ -2,11 +2,10 @@
 
 #> [name]=? [org]=? [profile]=medium
 
-VMNAME="$NAME-$ORG"
 if [[ "$NAME" == "main" ]]; then
- K3NAME="$ORG"
+ VMNAME="$ORG"
 else
- K3NAME="$NAME-$ORG"
+ VMNAME="$NAME-$ORG"
 fi
 
 lxc launch kube-medium --profile medium --profile base $VMNAME
@@ -26,7 +25,7 @@ while true; do
     echo "#> vm=$NAME"
     echo "#> name=$VMNAME"
     echo "#> profile=medium"
-    echo "#> dns=$K3NAME.kueb.io"
+    echo "#> dns=$VMNAME.kueb.io"
     echo "#> ip4=$IPV4"
     echo "#> ip6=$IPV6"
     echo ""
@@ -45,48 +44,48 @@ while true; do
 done
 
 KUBECFG="$(lxc exec $VMNAME -- cat /etc/rancher/k3s/k3s.yaml)"
-KUBECFG=${KUBECFG/127.0.0.1/$K3NAME.kueb.io}
+KUBECFG=${KUBECFG/127.0.0.1/$VMNAME.kueb.io}
 
 echo "$KUBECFG" | awk '{print "##>"$0}'
 
-cat <<EOF > /etc/traefik/services/${K3NAME}.yaml
+cat <<EOF > /etc/traefik/services/${VMNAME}.yaml
 http:
   routers:
-    route-$K3NAME:
-      rule: "Host(\`${K3NAME}.kueb.io\`)"
+    route-$VMNAME:
+      rule: "Host(\`${VMNAME}.kueb.io\`)"
       tls:
         certResolver: resolver0
         domains:
           - main: "*.kueb.io"
-      service: service-$K3NAME
+      service: service-$VMNAME
       priority: 1000
       entryPoints:
         - https
 
   services:
-    service-$K3NAME:
+    service-$VMNAME:
       loadBalancer:
         servers:
           - url: "http://[$IP4]:80"
 EOF
 
-cat <<EOF > /etc/traefik/services/${K3NAME}-6443.yaml
+cat <<EOF > /etc/traefik/services/${VMNAME}-6443.yaml
 tcp:
   routers:
-    route-$K3NAME-k8s:
-      rule: "HostSNI(\`${K3NAME}.kueb.io\`)"
+    route-$VMNAME-k8s:
+      rule: "HostSNI(\`${VMNAME}.kueb.io\`)"
       tls:
         passthrough: true
-      service: service-$K3NAME-k8s
+      service: service-$VMNAME-k8s
       priority: 1000
       entryPoints:
         - k8s
 
   services:
-    service-$K3NAME-k8s:
+    service-$VMNAME-k8s:
       loadBalancer:
         servers:
           - address: "[$IP4]:6443"
 EOF
 
-dns_create_record CNAME $K3NAME kueb.io $SYS_HOSTNAME
+dns_create_record CNAME $VMNAME kueb.io $SYS_HOSTNAME

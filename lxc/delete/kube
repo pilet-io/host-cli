@@ -2,15 +2,14 @@
 
 #> [name]=? [org]=?
 
-VMNAME="$NAME-$ORG"
 if [[ "$NAME" == "main" ]]; then
- K3NAME="$ORG"
+ VMNAME="$ORG"
 else
- K3NAME="$NAME-$ORG"
+ VMNAME="$NAME-$ORG"
 fi
 
 lxc stop $VMNAME
 lxc delete $VMNAME
-dns_delete_record $K3NAME kueb.io
-rm /etc/traefik/services/${K3NAME}.yaml
-rm /etc/traefik/services/${K3NAME}-6443.yaml
+dns_delete_record $VMNAME kueb.io
+rm /etc/traefik/services/${VMNAME}.yaml
+rm /etc/traefik/services/${VMNAME}-6443.yaml
