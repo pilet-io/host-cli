@@ -2,12 +2,16 @@
 
 #> [name]=some [org]=?
 
-VMNAME="$NAME-$ORG"
+if [[ "$NAME" == "main" ]]; then
+ VMNAME="$ORG"
+else
+ VMNAME="$NAME-$ORG"
+fi
 
 lxc config show $VMNAME > /dev/null 2>&1
 if [ $? -eq 0 ]; then
-  lxc stop $VMNAME
-  lxc delete $VMNAME
+  lxc stop "$VMNAME"
+  lxc delete "$VMNAME"
   store_delete_vm $VMNAME
   echo "Container $VMNAME was removed"
 else
