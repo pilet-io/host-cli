@@ -99,6 +99,7 @@ config:
       - git clone https://github.com/pilet-io/vm-cli.git /root/cli
       - echo "export PATH=\$PATH:/root/cli" >> /root/.profile
       - /root/cli/with host setup completion
+      - sed -i 's|#force_color_prompt=yes|force_color_prompt=yes|g' /root/.bashrc
       - echo "done" > /root/.done
 description: Basic profile
 EOF
