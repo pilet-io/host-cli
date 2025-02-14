@@ -96,8 +96,9 @@ config:
   cloud-init.user-data: |
     #cloud-config
     runcmd:
-      - sed -i "s|SYS_HOSTNAME|\$(hostnamectl hostname)|g" /etc/otelcol-contrib/config.yaml
-      - sed -i "s|system.kueb.io|\$(hostnamectl hostname).kueb.io|g" /etc/systemd/system/k3s.service
+      - git clone https://github.com/pilet-io/vm-cli.git /root/cli
+      - echo "export PATH=\$PATH:/root/cli" >> /root/.profile
+      - /root/cli/with host setup completion
       - echo "done" > /root/.done
 description: Basic profile
 EOF
