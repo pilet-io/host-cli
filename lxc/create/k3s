@@ -17,7 +17,7 @@ fi
 
 
 IP6=$(store_get_vm_addr6 $VMNAME)
-lxc exec $VMNAME -- bash -c "with host setup kube --hostname ${VMNAME}.kueb.io"
+lxc exec $VMNAME -- bash -c "/root/cli/with host setup kube --hostname ${VMNAME}.kueb.io"
 
 KUBECFG="$(lxc exec $VMNAME -- cat /etc/rancher/k3s/k3s.yaml)"
 KUBECFG=${KUBECFG/127.0.0.1/$VMNAME.kueb.io}
