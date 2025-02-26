@@ -6,6 +6,7 @@
 vm_save_uno_profile 2 6 240 medium
 vm_save_uno_profile 4 12 480 large
 vm_save_uno_profile 6 18 720 xlarge
+vm_save_uno_profile 6 18 4000 xlarge-disk
 
 vm_save_profile_base
 
