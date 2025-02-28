@@ -56,3 +56,5 @@ tcp:
         servers:
           - address: "[$IP6]:6443"
 EOF
+
+dns_create_record CNAME $VMNAME kueb.io $SYS_HOSTNAME

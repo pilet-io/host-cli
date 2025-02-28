@@ -9,5 +9,6 @@ else
 fi
 
 with lxc delete vm --name $NAME --org $ORG
+dns_delete_record $VMNAME kueb.io
 rm /etc/traefik/services/${VMNAME}.yaml
 rm /etc/traefik/services/${VMNAME}-6443.yaml
