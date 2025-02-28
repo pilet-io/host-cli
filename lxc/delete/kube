@@ -2,14 +2,4 @@
 
 #> [name]=? [org]=?
 
-if [[ "$NAME" == "main" ]]; then
- VMNAME="$ORG"
-else
- VMNAME="$NAME-$ORG"
-fi
-
-lxc stop $VMNAME
-lxc delete $VMNAME
-dns_delete_record $VMNAME kueb.io
-rm /etc/traefik/services/${VMNAME}.yaml
-rm /etc/traefik/services/${VMNAME}-6443.yaml
+with lxc delete vm --name $NAME --org $ORG
