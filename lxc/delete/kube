@@ -2,4 +2,12 @@
 
 #> [name]=? [org]=?
 
+if [[ "$NAME" == "main" ]]; then
+ VMNAME="$ORG"
+else
+ VMNAME="$NAME-$ORG"
+fi
+
 with lxc delete vm --name $NAME --org $ORG
+rm /etc/traefik/services/${VMNAME}.yaml
+rm /etc/traefik/services/${VMNAME}-6443.yaml

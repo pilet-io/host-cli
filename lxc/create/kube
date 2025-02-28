@@ -2,4 +2,55 @@
 
 #> [name]=? [org]=? [profile]=medium
 
+if [[ "$NAME" == "main" ]]; then
+ VMNAME="$ORG"
+else
+ VMNAME="$NAME-$ORG"
+fi
+
 with lxc create vm --name $NAME --org $ORG --profile $PROFILE
+if [ $? -ne 0 ]; then
+  echo "Failed creating container $VMNAME"
+  exit 1
+fi
+
+
+cat <<EOF > /etc/traefik/services/${VMNAME}.yaml
+http:
+  routers:
+    route-$VMNAME:
+      rule: "Host(\`${VMNAME}.kueb.io\`)"
+      tls:
+        certResolver: resolver0
+        domains:
+          - main: "*.kueb.io"
+      service: service-$VMNAME
+      priority: 1000
+      entryPoints:
+        - https
+
+  services:
+    service-$VMNAME:
+      loadBalancer:
+        servers:
+          - url: "http://[$IP6]:80"
+EOF
+
+cat <<EOF > /etc/traefik/services/${VMNAME}-6443.yaml
+tcp:
+  routers:
+    route-$VMNAME-k8s:
+      rule: "HostSNI(\`${VMNAME}.kueb.io\`)"
+      tls:
+        passthrough: true
+      service: service-$VMNAME-k8s
+      priority: 1000
+      entryPoints:
+        - k8s
+
+  services:
+    service-$VMNAME-k8s:
+      loadBalancer:
+        servers:
+          - address: "[$IP6]:6443"
+EOF
