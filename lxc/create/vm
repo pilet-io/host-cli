@@ -33,13 +33,13 @@ while true; do
     echo ""
     echo "IPs are $IPV4, $IPV6"
     store_save_vm $VMNAME $PROFILE $VMNAME.kueb.io $IPV4 $IPV6 > /dev/null
-    echo "#> host=$(hostname)"
-    echo "#> vm=$NAME"
-    echo "#> name=$VMNAME"
-    echo "#> profile=$PROFILE"
-    echo "#> dns=$VMNAME.kueb.io"
-    echo "#> ip4=$IPV4"
-    echo "#> ip6=$IPV6"
+    echo "!> host=$(hostname)"
+    echo "!> vm=$NAME"
+    echo "!> name=$VMNAME"
+    echo "!> profile=$PROFILE"
+    echo "!> dns=$VMNAME.kueb.io"
+    echo "!> ip4=$IPV4"
+    echo "!> ip6=$IPV6"
     echo ""
     break
   fi
