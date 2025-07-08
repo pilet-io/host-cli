@@ -37,7 +37,7 @@ while true; do
     echo "!> vm=$NAME"
     echo "!> name=$VMNAME"
     echo "!> profile=$PROFILE"
-    echo "!> dns=$VMNAME.kueb.io"
+    echo "!> dns=$VMNAME.kueb.link"
     echo "!> ip4=$IPV4"
     echo "!> ip6=$IPV6"
     echo ""
