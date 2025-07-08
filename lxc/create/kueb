@@ -2,8 +2,6 @@
 
 #> [name]=? [org]=? [profile]=medium
 
-s
-
 with lxc create vm --name $NAME --org $ORG --profile $PROFILE
 if [ $? -ne 0 ]; then
   echo "Failed creating container $VMNAME"
