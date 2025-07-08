@@ -21,11 +21,11 @@ cat <<EOF > /etc/traefik/services/${VMNAME}.yaml
 http:
   routers:
     route-$VMNAME:
-      rule: "Host(\`${VMNAME}.kueb.io\`)"
+      rule: "Host(\`${VMNAME}.kueb.link\`)"
       tls:
         certResolver: resolver0
         domains:
-          - main: "*.kueb.io"
+          - main: "*.kueb.link"
       service: service-$VMNAME
       priority: 1000
       entryPoints:
@@ -42,7 +42,7 @@ cat <<EOF > /etc/traefik/services/${VMNAME}-6443.yaml
 tcp:
   routers:
     route-$VMNAME-k8s:
-      rule: "HostSNI(\`${VMNAME}.kueb.io\`)"
+      rule: "HostSNI(\`${VMNAME}.kueb.link\`)"
       tls:
         passthrough: true
       service: service-$VMNAME-k8s
@@ -57,4 +57,4 @@ tcp:
           - address: "[$IP6]:6443"
 EOF
 
-#dns_create_record CNAME $VMNAME kueb.io $SYS_HOSTNAME
+#dns_create_record CNAME $VMNAME kueb.link $SYS_HOSTNAME
