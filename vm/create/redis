@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#> [name]=? [org]=?
+
+if [[ "$NAME" == "main" ]]; then
+ VMNAME="$ORG"
+else
+ VMNAME="$NAME-$ORG"
+fi
+
+lxc exec $VMNAME -- bash -lc "with kube create redis"
