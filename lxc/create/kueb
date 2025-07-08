@@ -2,6 +2,12 @@
 
 #> [name]=? [org]=? [profile]=medium
 
+if [[ "$NAME" == "main" ]]; then
+ VMNAME="$ORG"
+else
+ VMNAME="$NAME-$ORG"
+fi
+
 with lxc create vm --name $NAME --org $ORG --profile $PROFILE
 if [ $? -ne 0 ]; then
   echo "Failed creating container $VMNAME"
