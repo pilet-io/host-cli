@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#> [name]=? [org]=? [entry]=k8s [zone]=? [ip4]=? [port]=6443
+
+if [[ "$NAME" == "main" ]]; then
+ VMNAME="$ORG"
+else
+ VMNAME="$NAME-$ORG"
+fi
+
+SERVICE_NAME=$ENTRY-$VMNAME-$PORT
+DNS_NAME="${VMNAME}.${ZONE}"
+
+cat <<EOF > /etc/traefik/services/${SERVICE_NAME}.yaml
+tcp:
+  routers:
+    route-$SERVICE_NAME:
+      rule: "HostSNI(\`${DNS_NAME}\`)"
+      tls:
+        passthrough: true
+      service: $SERVICE_NAME
+      entryPoints:
+        - ${ENTRY}
+
+  services:
+    $SERVICE_NAME:
+      loadBalancer:
+        servers:
+          - address: "${IP4}:${PORT}"
+EOF

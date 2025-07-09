@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#> [name]=? [org]=? [entry]=https [zone]=? [ip4]=? [port]=80
+
+if [[ "$NAME" == "main" ]]; then
+ VMNAME="$ORG"
+else
+ VMNAME="$NAME-$ORG"
+fi
+
+SERVICE_NAME=$ENTRY-$VMNAME-$PORT
+DNS_NAME="${VMNAME}.${ZONE}"
+
+cat <<EOF > /etc/traefik/services/${SERVICE_NAME}.yaml
+http:
+  routers:
+    route-$SERVICE_NAME:
+      rule: "Host(\`${DNS_NAME}\`)"
+      tls:
+        certResolver: resolver0
+        domains:
+          - main: "*.${ZONE}"
+      service: $SERVICE_NAME
+      entryPoints:
+        - ${ENTRY}
+
+  services:
+    $SERVICE_NAME:
+      loadBalancer:
+        servers:
+          - url: "http://${IP4}:${PORT}"
+EOF

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#> [name]=? [org]=? [entry]=k8s [zone]=? [ip4]=? [port]=6443
+
+if [[ "$NAME" == "main" ]]; then
+ VMNAME="$ORG"
+else
+ VMNAME="$NAME-$ORG"
+fi
+
+SERVICE_NAME=$ENTRY-$VMNAME-$PORT
+rm /etc/traefik/services/${SERVICE_NAME}.yaml
