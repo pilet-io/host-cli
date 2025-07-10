@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#> [name]=? [org]=? [profile]=medium
+#> [name]=? [org]=? [profile]=medium [zone]=kueb.link
 
 if [[ "$NAME" == "main" ]]; then
  VMNAME="$ORG"
@@ -14,5 +14,4 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-IP6=$(store_get_vm_addr6 $VMNAME)
-lxc exec $VMNAME -- bash -c "/root/cli/with host setup kube --hostname ${VMNAME}.kueb.link"
+lxc exec $VMNAME -- bash -c "/root/cli/with host setup kube --hostname ${VMNAME}.${ZONE}"

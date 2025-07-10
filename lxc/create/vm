@@ -32,7 +32,7 @@ while true; do
   if [ ! -z "$IPV6" ]; then
     echo ""
     echo "IPs are $IPV4, $IPV6"
-    store_save_vm $VMNAME $PROFILE $VMNAME.kueb.io $IPV4 $IPV6 > /dev/null
+    #store_save_vm $VMNAME $PROFILE $VMNAME.kueb.io $IPV4 $IPV6 > /dev/null
     echo "!> host=$(hostname)"
     echo "!> vm=$NAME"
     echo "!> name=$VMNAME"
